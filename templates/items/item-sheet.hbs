@@ -1,0 +1,280 @@
+<form class="watchkeeper-item-sheet">
+    <header class="sheet-header">
+        <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64" />
+        <div class="header-fields">
+            <h1>
+                <input name="name" type="text" value="{{item.name}}" placeholder="Item Name" />
+            </h1>
+            <div class="item-type-display">{{localizeItemType item.type}}</div>
+        </div>
+    </header>
+
+
+
+    <div class="item-details-section">
+        <h3>{{localize "watchkeeper.Details"}}</h3>
+
+        {{#if (eq item.type "weapon")}}
+
+        <div class="form-group">
+            <label>{{labels.attackWith}}</label>
+            <select name="system.attackWith">
+                {{#select system.attackWith}}
+                <option value="guns">{{localize "watchkeeper.attack.guns"}}</option>
+                <option value="melee">{{localize "watchkeeper.attack.melee"}}</option>
+                <option value="creature">{{localize "watchkeeper.attack.creature"}}</option>
+                {{/select}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>{{labels.values}}</label>
+            <select name="system.values">
+                {{#select system.values}}
+                <option value="common">{{values.common}}</option>
+                <option value="valuable">{{values.valuable}}</option>
+                <option value="rare">{{values.rare}}</option>
+                <option value="legendary">{{values.legendary}}</option>
+                {{/select}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>{{labels.skillUsed}}</label>
+            <input type="text" name="system.skillUsed" value="{{system.skillUsed}}" />
+        </div>
+        <div class="form-group">
+            <label>{{labels.skillModifier}}</label>
+            <input type="number" name="system.skillModifier" value="{{system.skillModifier}}" />
+        </div>
+        <div class="form-group">
+            <label>{{labels.damage}}</label>
+            <input type="number" name="system.damage" value="{{system.damage}}" />
+        </div>
+        <div class="form-group">
+            <label>{{labels.range}}</label>
+            <input type="number" name="system.range" value="{{system.range}}" />
+        </div>
+        <div class="form-group">
+            <label>{{labels.damageRadius}}</label>
+            <input type="number" name="system.damageRadius" value="{{system.damageRadius}}" />
+        </div>
+        <div class="form-group">
+            <label>{{labels.concealment}}</label>
+            <input type="number" name="system.concealment" value="{{system.concealment}}" />
+        </div>
+        <div class="form-group">
+            <label>{{labels.durability}}</label>
+            <input type="number" name="system.durability" value="{{system.durability}}" />
+        </div>
+        <div class="form-group">
+            <label>{{labels.weight}}</label>
+            <input type="number" name="system.weight" value="{{system.weight}}" />
+        </div>
+        <div class="form-group">
+            <label>{{labels.loaded}}</label>
+            <input type="checkbox" name="system.loaded" value="{{system.loaded}}" />
+        </div>
+
+        <div class="form-group">
+            <label>{{labels.magazines}}</label>
+            <input type="text" name="system.magazines" value="{{system.magazines}}" />
+        </div>
+        {{/if}}
+
+        {{#if (eq item.type "armor")}}
+        <div class="form-group">
+            <label>{{labels.protectionValue}}</label>
+            <input type="number" name="system.protectionValue" value="{{system.protectionValue}}" />
+        </div>
+        <div class="form-group">
+            <label>{{labels.bodyPart}}</label>
+            <select name="system.bodyPart">
+                {{#select system.bodyPart}}
+                <option value="torso">{{bodyParts.torso}}</option>
+                <option value="head">{{bodyParts.head}}</option>
+                <option value="arms">{{bodyParts.arms}}</option>
+                <option value="legs">{{bodyParts.legs}}</option>
+                <option value="fullBody">{{bodyParts.fullBody}}</option>
+                {{/select}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>{{labels.values}}</label>
+            <select name="system.values">
+                {{#select system.values}}
+                <option value="common">{{values.common}}</option>
+                <option value="valuable">{{values.valuable}}</option>
+                <option value="rare">{{values.rare}}</option>
+                <option value="legendary">{{values.legendary}}</option>
+                {{/select}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>{{labels.concealment}}</label>
+            <input type="number" name="system.concealment" value="{{system.concealment}}" />
+        </div>
+        <div class="form-group">
+            <label>{{labels.inventorySlot}}</label>
+            <input type="number" name="system.inventorySlot" value="{{system.inventorySlot}}" />
+        </div>
+        <div class="form-group">
+            <label>{{labels.weight}}</label>
+            <input type="number" name="system.weight" value="{{system.weight}}" />
+        </div>
+        <div class="form-group">
+            <label>{{labels.durability}}</label>
+            <input type="number" name="system.durability" value="{{system.durability}}" />
+        </div>
+        {{/if}}
+
+        {{#if (eq item.type "utility")}}
+        <div class="form-group">
+            <label>{{labels.values}}</label>
+            <select name="system.values">
+                {{#select system.values}}
+                <option value="common">{{values.common}}</option>
+                <option value="valuable">{{values.valuable}}</option>
+                <option value="rare">{{values.rare}}</option>
+                <option value="legendary">{{values.legendary}}</option>
+                {{/select}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>{{labels.skillUsed}}</label>
+            <input type="text" name="system.skillUsed" value="{{system.skillUsed}}" />
+        </div>
+        <div class="form-group">
+            <label>{{labels.skillModifier}}</label>
+            <input type="number" name="system.skillModifier" value="{{system.skillModifier}}" />
+        </div>
+        <div class="form-group">
+            <label>{{labels.durability}}</label>
+            <input type="number" name="system.durability" value="{{system.durability}}" />
+        </div>
+        <div class="form-group">
+            <label>{{labels.weight}}</label>
+            <input type="number" name="system.weight" value="{{system.weight}}" />
+        </div>
+        {{/if}}
+        {{#if (eq item.type "genomes")}}
+        <div class="form-group">
+            <label>{{labels.values}}</label>
+            <select name="system.values">
+                {{#select system.values}}
+                <option value="common">{{values.common}}</option>
+                <option value="valuable">{{values.valuable}}</option>
+                <option value="rare">{{values.rare}}</option>
+                <option value="legendary">{{values.legendary}}</option>
+                {{/select}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>{{labels.difficulty}}</label>
+            <input type="number" name="system.difficulty" value="{{system.difficulty}}" />
+        </div>
+        <div class="form-group">
+            <label>{{labels.xenosisGain}}</label>
+            <input type="number" name="system.xenosisGain" value="{{system.xenosisGain}}" />
+        </div>
+        <div class="form-group">
+            <label>{{labels.abilityTrait}}</label>
+            <input type="text" name="system.abilityTrait" value="{{system.abilityTrait}}" />
+        </div>
+        {{/if}}
+        {{#if (eq item.type "consumables")}}
+        <div class="form-group">
+            <label>{{labels.healthRegen}}</label>
+            <input type="number" name="system.healthRegen" value="{{system.healthRegen}}" />
+        </div>
+        <div class="form-group">
+            <label>{{labels.weight}}</label>
+            <input type="number" name="system.weight" value="{{system.weight}}" />
+        </div>
+        {{/if}}
+
+        {{#if (eq item.type "miscellanous")}}
+        <div class="form-group">
+            <label>{{labels.weight}}</label>
+            <input type="number" name="system.weight" value="{{system.weight}}" />
+        </div>
+        {{/if}}
+
+        {{#if (eq item.type "vehicle")}}
+        <div class="vehicle-details">
+        <div class="form-group">
+            <label>{{labels.values}}</label>
+            <select name="system.values">
+                {{#select system.values}}
+                <option value="common">{{values.common}}</option>
+                <option value="valuable">{{values.valuable}}</option>
+                <option value="rare">{{values.rare}}</option>
+                <option value="legendary">{{values.legendary}}</option>
+                {{/select}}
+            </select>
+        </div>
+
+            <div class="form-group">
+                <label>{{labels.durability}}</label>
+                <input type="number" name="system.durability" value="{{system.durability}}" />
+            </div>
+
+            <h3>{{localize "watchkeeper.item.fields.armor"}}</h3>
+            <div class="armor-grid">
+                <div class="form-group">
+                    <label>{{labels.spFront}}</label>
+                    <input type="number" name="system.spFront" value="{{system.spFront}}" />
+                </div>
+                <div class="form-group">
+                    <label>{{labels.spSide}}</label>
+                    <input type="number" name="system.spSide" value="{{system.spSide}}" />
+                </div>
+                <div class="form-group">
+                    <label>{{labels.spBack}}</label>
+                    <input type="number" name="system.spBack" value="{{system.spBack}}" />
+                </div>
+            </div>
+
+            <h3>{{localize "watchkeeper.item.fields.movement"}}</h3>
+            <div class="speed-grid">
+                <div class="form-group">
+                    <label>{{labels.travelSpeed}}</label>
+                    <input type="number" name="system.travelSpeed" value="{{system.travelSpeed}}" />
+                </div>
+                <div class="form-group">
+                    <label>{{labels.combatSpeed}}</label>
+                    <input type="number" name="system.combatSpeed" value="{{system.combatSpeed}}" />
+                </div>
+            </div>
+
+            <h3>{{localize "watchkeeper.item.fields.fuel"}}</h3>
+            <div class="fuel-grid">
+                <div class="form-group">
+                    <label>{{labels.fuelConsumption}}</label>
+                    <input type="number" name="system.fuelConsumption" value="{{system.fuelConsumption}}" />
+                </div>
+                <div class="form-group">
+                    <label>{{labels.fuelCurrent}}</label>
+                    <input type="number" name="system.fuelCurrent" value="{{system.fuelCurrent}}" />
+                </div>
+                <div class="form-group">
+                    <label>{{labels.fuelMax}}</label>
+                    <input type="number" name="system.fuelMax" value="{{system.fuelMax}}" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>{{labels.inventorySlots}}</label>
+                <input type="number" name="system.inventorySlots" value="{{system.inventorySlots}}" />
+            </div>
+
+            <div class="form-group">
+                <label>{{labels.weapons}}</label>
+                <textarea name="system.weapons" rows="3">{{system.weapons}}</textarea>
+            </div>
+        </div>
+        {{/if}}
+        <div class="item-description-section">
+            <h3>{{localize "watchkeeper.item.fields.description"}}</h3>
+            <textarea name="system.description" rows="5">{{system.description}}</textarea>
+        </div>
+    </div>
+    </form>

@@ -1,0 +1,42 @@
+{
+    "id": "watchkeeper",
+    "title": "Watchkeeper",
+    "description": "The core system for playing Watchkeeper game",
+    "background": "systems/watchkeeper/assets/img/watchkeeper_splash_page.jpg",
+    "authors": [
+        {
+            "name": "Trin",
+            "discord": "Trin067"
+        },
+        {
+            "name": "Fin Bosworth",
+            "discord": "new_age_frog"
+        }
+    ],
+    "version": "0.0.1",
+    "compatibility": {
+        "minimum": 13,
+        "verified": "13.345",
+        "maximum": 13
+    },
+    "esmodules": [
+        "modules/watchkeeper.js"
+    ],
+    "styles": [
+        "css/watchkeeper.css"
+    ],
+    "languages": [
+        {
+            "lang": "en",
+            "name": "English",
+            "path": "lang/en.json"
+        }
+    ],
+    "socket": false,
+    "grid": {
+        "distance": 1,
+        "units": "Meter"
+    },
+    "manifest": "https://github.com/TrinOniron/watchkeeper/releases/latest/download/system.json",
+    "download": "https://github.com/TrinOniron/watchkeeper/releases/latest/download/0.0.1/system.zip"
+}

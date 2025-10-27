@@ -1,0 +1,533 @@
+{{! namedCharacter.hbs }}
+<form class="namedCharacterSheet-sheet">
+    <header class="sheet-header">
+        <div class="charname">
+            <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="64" width="64" />
+            <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'watchkeeper.namedCharacterSheet.Name'}}" />
+            
+        </div>
+    </header>
+
+    <div class="namedCharacterSheet-container">
+        <!-- PERSONAL SECTION -->
+        <div class="personal-section">
+            <h2>{{localize "watchkeeper.namedCharacterSheet.Personal"}}</h2>
+
+            <div class="grid-container">
+                <label>{{localize "watchkeeper.namedCharacterSheet.Pseudonym"}}</label>
+                <input type="text" name="system.personal.pseudonym" value="{{system.personal.pseudonym}}" />
+                <label>{{localize "watchkeeper.namedCharacterSheet.Pronouns"}}</label>
+                <input type="text" name="system.personal.pronouns" value="{{system.personal.pronouns}}" />
+                <label>{{localize "watchkeeper.namedCharacterSheet.Age"}}</label>
+                <input type="number" name="system.personal.age" value="{{system.personal.age}}" />
+                <label>{{localize "watchkeeper.namedCharacterSheet.Height"}}</label>
+                <input type="number" name="system.personal.height" value="{{system.personal.height}}" />
+                <label>{{localize "watchkeeper.namedCharacterSheet.Identity"}}</label>
+                <input type="text" name="system.personal.identity" value="{{system.personal.identity}}" />
+                <label>{{localize "watchkeeper.namedCharacterSheet.Fate"}}</label>
+                <select name="system.personal.fate">
+                    {{#select system.personal.fate}}
+                    <option value="guerrilla">{{fate.guerrilla}}</option>
+                    <option value="watchkeeper">{{fate.watchkeeper}}</option>
+                    <option value="penal">{{fate.penal}}</option>
+                    <option value="stray">{{fate.stray}}</option>
+                    <option value="nihilist">{{fate.nihilist}}</option>
+                    <option value="zealot">{{fate.zealot}}</option>
+                    {{/select}}
+                </select>
+                <label>{{localize "watchkeeper.namedCharacterSheet.xpPoints"}}</label>
+                <input type="number" name="system.personal.xpPoints" value="{{system.personal.xpPoints}}" />
+
+
+
+
+
+                <label>{{localize "watchkeeper.namedCharacterSheet.Drive"}}</label>
+                <input type="text" name="system.personal.drive" value="{{system.personal.drive}}" />
+
+                <label>{{localize "watchkeeper.namedCharacterSheet.Callsign"}}</label>
+                <input type="text" name="system.personal.callsign" value="{{system.personal.callsign}}" />
+
+
+
+                <label>{{localize "watchkeeper.namedCharacterSheet.Origin"}}</label>
+                <input type="text" name="system.personal.origin" value="{{system.personal.origin}}" />
+
+
+
+
+
+                <label>{{localize "watchkeeper.namedCharacterSheet.Mementos"}}</label>
+                <textarea name="system.personal.mementos" rows="5">{{system.personal.mementos}}</textarea>
+
+                <label>{{localize "watchkeeper.namedCharacterSheet.Beliefs"}}</label>
+                <textarea name="system.personal.beliefs" rows="5">{{system.personal.beliefs}}</textarea>
+                <label>{{localize "watchkeeper.namedCharacterSheet.Biography"}}</label>
+                <textarea name="system.personal.beliefs" rows="5">{{system.personal.biography}}</textarea>
+            </div>
+        </div>
+
+        <!-- STATISTICS SECTION -->
+        <div class="stats-section">
+            <h2>{{localize "watchkeeper.namedCharacterSheet.Statistics"}}</h2>
+
+            <div class="grid-container">
+                <label>{{localize "watchkeeper.namedCharacterSheet.HitPoints"}}</label>
+                <input type="number" name="system.stats.hp.value" value="{{system.stats.hp.value}}" />
+                <label>{{localize "watchkeeper.namedCharacterSheet.MaxHP"}}</label>
+                <input type="number" name="system.stats.hp.max" value="{{system.stats.hp.max}}" />
+                <div class="form-group">
+                    <label title="{{localize 'watchkeeper.namedCharacterSheet.FatigueExplain'}}">{{localize "watchkeeper.namedCharacterSheet.Fatigue"}}</label>
+                    <div class="fatigue-container">
+                        <input type="number" name="system.fatigue.current" value="{{system.fatigue.current}}"
+                               min="0" max="{{system.fatigue.max}}" class="current-fatigue"
+                               title="{{localize 'watchkeeper.namedCharacterSheet.CurrentFatigue'}}" />
+                        <span>/</span>
+                        <input type="number" name="system.fatigue.max" value="{{system.fatigue.max}}"
+                               min="0" class="max-fatigue" title="{{localize 'watchkeeper.namedCharacterSheet.MaxFatigue'}}" />
+                    </div>
+                </div>
+                <label>{{localize "watchkeeper.namedCharacterSheet.MovementSpeed"}}</label>
+                <input type="number" name="system.stats.movement" value="{{system.stats.movement}}" />
+
+                <label>{{localize "watchkeeper.namedCharacterSheet.Morale"}}</label>
+                <input type="number" name="system.stats.morale" value="{{system.stats.morale}}" />
+
+                <label>{{localize "watchkeeper.namedCharacterSheet.Xenosis"}}</label>
+                <input type="number" name="system.stats.xenosis" value="{{system.stats.xenosis}}" />
+            </div>
+        </div>
+        <!-- SAVES SECTION -->
+        <div class="saves-section">
+            <h2>{{localize "watchkeeper.Saves"}}</h2>
+
+            <div class="saves-controls">
+                <div class="points-display">
+                    <strong>{{localize "watchkeeper.TotalPoints"}}</strong>
+                    <div class="remaining-points">
+                        {{localize "watchkeeper.PointsRemaining"}}:
+                        <span class="points-value">{{system.savesRemaining}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="saves-grid">
+                <div class="save-item">
+                    <label>{{localize "watchkeeper.Endurance"}}</label>
+                    <div class="save-controls">
+                        <button class="save-decrease" data-save="endurance">-</button>
+                        <input type="number" name="system.saves.endurance" value="{{system.saves.endurance}}" min="20" max="65" />
+                        <button class="save-increase" data-save="endurance">+</button>
+                    </div>
+                    <div class="save-value">{{system.saves.endurance}}</div>
+                </div>
+
+                <div class="save-item">
+                    <label>{{localize "watchkeeper.Resolve"}}</label>
+                    <div class="save-controls">
+                        <button class="save-decrease" data-save="resolve">-</button>
+                        <input type="number" name="system.saves.resolve" value="{{system.saves.resolve}}" min="20" max="65" />
+                        <button class="save-increase" data-save="resolve">+</button>
+                    </div>
+                    <div class="save-value">{{system.saves.resolve}}</div>
+                </div>
+
+                <div class="save-item">
+                    <label>{{localize "watchkeeper.Perception"}}</label>
+                    <div class="save-controls">
+                        <button class="save-decrease" data-save="perception">-</button>
+                        <input type="number" name="system.saves.perception" value="{{system.saves.perception}}" min="20" max="65" />
+                        <button class="save-increase" data-save="perception">+</button>
+                    </div>
+                    <div class="save-value">{{system.saves.perception}}</div>
+                </div>
+
+                <div class="save-item">
+                    <label>{{localize "watchkeeper.Agility"}}</label>
+                    <div class="save-controls">
+                        <button class="save-decrease" data-save="agility">-</button>
+                        <input type="number" name="system.saves.agility" value="{{system.saves.agility}}" min="20" max="65" />
+                        <button class="save-increase" data-save="agility">+</button>
+                    </div>
+                    <div class="save-value">{{system.saves.agility}}</div>
+                </div>
+
+                <div class="save-item">
+                    <label>{{localize "watchkeeper.Charisma"}}</label>
+                    <div class="save-controls">
+                        <button class="save-decrease" data-save="charisma">-</button>
+                        <input type="number" name="system.saves.charisma" value="{{system.saves.charisma}}" min="20" max="65" />
+                        <button class="save-increase" data-save="charisma">+</button>
+                    </div>
+                    <div class="save-value">{{system.saves.charisma}}</div>
+                </div>
+            </div>
+        </div>
+        <!-- SKILLS SECTION -->
+        <div class="skills-section">
+            <h2>{{localize "watchkeeper.namedCharacterSheet.Skills"}}</h2>
+
+            <div class="skills-columns">
+                <!-- Column 1 -->
+                <div class="skills-column">
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Athletics"}}</label>
+                        <input type="number" name="system.skills.athletics" value="{{system.skills.athletics}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Acrobatics"}}</label>
+                        <input type="number" name="system.skills.acrobatics" value="{{system.skills.acrobatics}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.FirstAid"}}</label>
+                        <input type="number" name="system.skills.firstAid" value="{{system.skills.firstAid}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.LightFirearms"}}</label>
+                        <input type="number" name="system.skills.lightFirearms" value="{{system.skills.lightFirearms}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Search"}}</label>
+                        <input type="number" name="system.skills.search" value="{{system.skills.search}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.BluntMelee"}}</label>
+                        <input type="number" name="system.skills.bluntMelee" value="{{system.skills.bluntMelee}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Brawling"}}</label>
+                        <input type="number" name="system.skills.brawling" value="{{system.skills.brawling}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Stealth"}}</label>
+                        <input type="number" name="system.skills.stealth" value="{{system.skills.stealth}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Acting"}}</label>
+                        <input type="number" name="system.skills.acting" value="{{system.skills.acting}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.AnimalHandling"}}</label>
+                        <input type="number" name="system.skills.animalHandling" value="{{system.skills.animalHandling}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Art"}}</label>
+                        <input type="number" name="system.skills.art" value="{{system.skills.art}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Artillery"}}</label>
+                        <input type="number" name="system.skills.artillery" value="{{system.skills.artillery}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Attractiveness"}}</label>
+                        <input type="number" name="system.skills.attractiveness" value="{{system.skills.attractiveness}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Barter"}}</label>
+                        <input type="number" name="system.skills.barter" value="{{system.skills.barter}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.BladeMelee"}}</label>
+                        <input type="number" name="system.skills.bladeMelee" value="{{system.skills.bladeMelee}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Command"}}</label>
+                        <input type="number" name="system.skills.command" value="{{system.skills.command}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Contacts"}}</label>
+                        <input type="number" name="system.skills.contacts" value="{{system.skills.contacts}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.CulturalIntelligence"}}</label>
+                        <input type="number" name="system.skills.culturalIntelligence" value="{{system.skills.culturalIntelligence}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Deceive"}}</label>
+                        <input type="number" name="system.skills.deceive" value="{{system.skills.deceive}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Demolitions"}}</label>
+                        <input type="number" name="system.skills.demolitions" value="{{system.skills.demolitions}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Drive"}}</label>
+                        <input type="number" name="system.skills.drive" value="{{system.skills.drive}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.EmotionalIntelligence"}}</label>
+                        <input type="number" name="system.skills.emotionalIntelligence" value="{{system.skills.emotionalIntelligence}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.EndureTorture"}}</label>
+                        <input type="number" name="system.skills.endureTorture" value="{{system.skills.endureTorture}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Gambling"}}</label>
+                        <input type="number" name="system.skills.gambling" value="{{system.skills.gambling}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.HeavyFirearms"}}</label>
+                        <input type="number" name="system.skills.heavyFirearms" value="{{system.skills.heavyFirearms}}" min="0" max="100" />
+                    </div>
+                </div>
+
+                <!-- Column 2 -->
+                <div class="skills-column">
+
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.History"}}</label>
+                        <input type="number" name="system.skills.history" value="{{system.skills.history}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.InterpretLanguage"}}</label>
+                        <input type="number" name="system.skills.interpretLanguage" value="{{system.skills.interpretLanguage}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Intimidate"}}</label>
+                        <input type="number" name="system.skills.intimidate" value="{{system.skills.intimidate}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Marksmanship"}}</label>
+                        <input type="number" name="system.skills.marksmanship" value="{{system.skills.marksmanship}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Mechanic"}}</label>
+                        <input type="number" name="system.skills.mechanic" value="{{system.skills.mechanic}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Medicine"}}</label>
+                        <input type="number" name="system.skills.medicine" value="{{system.skills.medicine}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.MediumFirearms"}}</label>
+                        <input type="number" name="system.skills.mediumFirearms" value="{{system.skills.mediumFirearms}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Mindcast"}}</label>
+                        <input type="number" name="system.skills.mindcast" value="{{system.skills.mindcast}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Music"}}</label>
+                        <input type="number" name="system.skills.music" value="{{system.skills.music}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Navigate"}}</label>
+                        <input type="number" name="system.skills.navigate" value="{{system.skills.navigate}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Oration"}}</label>
+                        <input type="number" name="system.skills.oration" value="{{system.skills.oration}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Performance"}}</label>
+                        <input type="number" name="system.skills.performance" value="{{system.skills.performance}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Piloting"}}</label>
+                        <input type="number" name="system.skills.piloting" value="{{system.skills.piloting}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Planning"}}</label>
+                        <input type="number" name="system.skills.planning" value="{{system.skills.planning}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Reconnaissance"}}</label>
+                        <input type="number" name="system.skills.reconnaissance" value="{{system.skills.reconnaissance}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Ride"}}</label>
+                        <input type="number" name="system.skills.ride" value="{{system.skills.ride}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.SleightOfHand"}}</label>
+                        <input type="number" name="system.skills.sleightOfHand" value="{{system.skills.sleightOfHand}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Streetwise"}}</label>
+                        <input type="number" name="system.skills.streetwise" value="{{system.skills.streetwise}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Survival"}}</label>
+                        <input type="number" name="system.skills.survival" value="{{system.skills.survival}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Swimming"}}</label>
+                        <input type="number" name="system.skills.swimming" value="{{system.skills.swimming}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Tactics"}}</label>
+                        <input type="number" name="system.skills.tactics" value="{{system.skills.tactics}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Technology"}}</label>
+                        <input type="number" name="system.skills.technology" value="{{system.skills.technology}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Tracking"}}</label>
+                        <input type="number" name="system.skills.tracking" value="{{system.skills.tracking}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Xenology"}}</label>
+                        <input type="number" name="system.skills.xenology" value="{{system.skills.xenology}}" min="0" max="100" />
+                    </div>
+                    <div class="skill-item">
+                        <label>{{localize "watchkeeper.skills.Xenoweapon"}}</label>
+                        <input type="number" name="system.skills.xenoweapon" value="{{system.skills.xenoweapon}}" min="0" max="100" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PSYCHOLOGY SECTION -->
+        <div class="psychology-section">
+            <h2>{{localize "watchkeeper.namedCharacterSheet.Psychology"}}</h2>
+            {{! Psychology Section - Add debug info }}
+            <div style="display: none;">
+                Psychology Debug:
+                Disorders: {{system.psychology.disorders.length}} items
+                Mutations: {{system.psychology.mutations.length}} items
+            </div>
+
+            {{! Disorders Table }}
+            <div class="table-container">
+                <h3>{{localize "watchkeeper.namedCharacterSheet.Disorders"}}</h3>
+                <table class="disorders-table">
+                    <thead>
+                        <tr>
+                            <th>{{localize "watchkeeper.namedCharacterSheet.Disorders"}}</th>
+                            <th>{{localize "watchkeeper.namedCharacterSheet.Minimal"}}</th>
+                            <th>{{localize "watchkeeper.namedCharacterSheet.Severe"}}</th>
+                            <th>{{localize "watchkeeper.namedCharacterSheet.Critical"}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each system.psychology.disorders as |disorder index|}}
+                        <tr>
+                            <td class="name-cell">
+                                <input type="text" name="system.psychology.disorders.{{index}}.name"
+                                       value="{{disorder.name}}" placeholder="{{localize "watchkeeper.namedCharacterSheet.DisorderName"}}" />
+                            </td>
+                            <td class="level-cell minimal-cell">
+                                <input type="text" name="system.psychology.disorders.{{index}}.minimal"
+                                       value="{{disorder.minimal}}" 
+                                       data-index="{{index}}" data-type="disorders" data-level="minimal" />
+                            </td>
+                            <td class="level-cell severe-cell">
+                                <input type="text" name="system.psychology.disorders.{{index}}.severe"
+                                       value="{{disorder.severe}}" 
+                                       data-index="{{index}}" data-type="disorders" data-level="severe" />
+                            </td>
+                            <td class="level-cell critical-cell">
+                                <input type="text" name="system.psychology.disorders.{{index}}.critical"
+                                       value="{{disorder.critical}}" 
+                                       data-index="{{index}}" data-type="disorders" data-level="critical" />
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+
+            {{! Mutations Table }}
+            <div class="table-container">
+                <h3>{{localize "watchkeeper.namedCharacterSheet.Mutations"}}</h3>
+                <table class="mutations-table">
+                    <thead>
+                        <tr>
+                            <th>{{localize "watchkeeper.namedCharacterSheet.Mutations"}}</th>
+                            <th>{{localize "watchkeeper.namedCharacterSheet.Minimal"}}</th>
+                            <th>{{localize "watchkeeper.namedCharacterSheet.Severe"}}</th>
+                            <th>{{localize "watchkeeper.namedCharacterSheet.Critical"}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each system.psychology.mutations as |mutation index|}}
+                        <tr>
+                            <td class="name-cell">
+                                <input type="text" name="system.psychology.mutations.{{index}}.name"
+                                       value="{{mutation.name}}" placeholder="{{localize "watchkeeper.namedCharacterSheet.MutationName"}}" />
+                            </td>
+                            <td class="level-cell minimal-cell">
+                                <input type="text" name="system.psychology.mutations.{{index}}.minimal"
+                                       value="{{mutation.minimal}}" 
+                                       data-index="{{index}}" data-type="mutations" data-level="minimal" />
+                            </td>
+                            <td class="level-cell severe-cell">
+                                <input type="text" name="system.psychology.mutations.{{index}}.severe"
+                                       value="{{mutation.severe}}" 
+                                       data-index="{{index}}" data-type="mutations" data-level="severe" />
+                            </td>
+                            <td class="level-cell critical-cell">
+                                <input type="text" name="system.psychology.mutations.{{index}}.critical"
+                                       value="{{mutation.critical}}" 
+                                       data-index="{{index}}" data-type="mutations" data-level="critical" />
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- INVENTORY SECTION -->
+        <div class="inventory-section">
+            <h2>{{localize "watchkeeper.namedCharacterSheet.Inventory"}}</h2>
+
+            <div class="inventory-header">
+                <div class="item-name-header">{{localize "watchkeeper.namedCharacterSheet.ItemName"}}</div>
+                <div class="item-type-header">{{localize "watchkeeper.namedCharacterSheet.ItemType"}}</div>
+                <div class="item-weight-header">{{localize "watchkeeper.item.fields.weight"}}</div>
+                <div class="item-controls-header">{{localize "watchkeeper.namedCharacterSheet.ItemActions"}}</div>
+            </div>
+
+            <div class="inventory-list">
+                {{#each actor.items as |item id|}}
+                <div class="item flexrow" data-item-id="{{item._id}}">
+                    <div class="item-name">
+                        <img src="{{item.img}}" title="{{item.name}}" width="24" height="24" />
+                        <span class="item-link">{{item.name}}</span>
+                    </div>
+                    <div class="item-type">{{localizeItemType item.type}}</div>
+                    <div class="item-weight">{{item.system.weight}}</div>
+                    <div class="item-controls">
+                        <a class="item-control item-edit" title="{{localize 'watchkeeper.namedCharacterSheet.ItemEdit'}}"><i class="fas fa-edit"></i></a>
+                        <a class="item-control item-delete" title="{{localize 'watchkeeper.namedCharacterSheet.ItemDelete'}}"><i class="fas fa-trash"></i></a>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+
+            <div class="inventory-footer">
+                <div class="item-controls">
+                    <div class="item-create-group">
+                        <select class="item-type-select">
+                            <option value="weapon">{{localize "watchkeeper.item.types.weapon"}}</option>
+                            <option value="armor">{{localize "watchkeeper.item.types.armor"}}</option>
+                            <option value="utility">{{localize "watchkeeper.item.types.utility"}}</option>
+                            <option value="genomes">{{localize "watchkeeper.item.types.genomes"}}</option>
+                            <option value="consumables">{{localize "watchkeeper.item.types.consumables"}}</option>
+                            <option value="miscellanous">{{localize "watchkeeper.item.types.miscellanous"}}</option>
+                            <option value="vehicle">{{localize "watchkeeper.item.types.vehicle"}}</option>
+                        </select>
+                        <a class="item-control item-create" title="{{localize 'watchkeeper.namedCharacterSheet.ItemCreate'}}">
+                            <i class="fas fa-plus"></i> {{localize "watchkeeper.namedCharacterSheet.ItemAddItem"}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TRAITS SECTION -->
+        <div class="traits-section">
+            <h2>{{localize "watchkeeper.namedCharacterSheet.Traits"}}</h2>
+            <textarea name="system.traits">{{system.traits}}</textarea>
+        </div>
+        <!-- Abilities SECTION -->
+        <div class="traits-section">
+            <h2>{{localize "watchkeeper.namedCharacterSheet.Abilities"}}</h2>
+            <textarea name="system.abilities">{{system.abilities}}</textarea>
+        </div>
+
+
+    </div>
+</form>

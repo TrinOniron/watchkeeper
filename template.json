@@ -1,0 +1,290 @@
+ {
+    "Actor": {
+        "types": [
+            "hero",
+            "npc",
+            "alien"
+        ],
+        "templates": {
+            "commonStats": {
+                "attackPrimary": {
+                    "name": "guns",
+                    "value": 7
+                },
+
+                "defense": 7,
+                "speed": 7,
+                "concept": ""
+            },
+            "namedCharacter": {
+                "attackBackup": {
+                    "name": "melee",
+                    "value": 7
+                },
+                "toughness": 7,
+                "wounds": {
+                    "value": 0,
+                    "max": 60
+                },
+                "impairment": {
+                    "treshold": 25,
+                    "extra": 0
+                }
+            }
+        },
+        "npc": {
+            "templates": [
+                "commonStats",
+                "namedCharacter"
+            ],
+            "wounds": {
+                "max": 35
+            }
+        },
+        "alien": {
+            "templates": [
+                "commonStats",
+                "namedCharacter"
+            ],
+            "wounds": {
+                "max": 50
+            },
+            "impairment": {
+                "treshold": 40
+
+            }
+
+        },
+        "hero": {
+            "templates": [
+                "commonStats",
+                "namedCharacter"
+            ],
+            "system": {
+                "personal": {
+                    "pseudonym": "",
+                    "pronouns": "",
+                    "identity": "",
+                    "drive": "",
+                    "callsign": "",
+                    "age": 0,
+                    "height": 0,
+                    "origin": "",
+                    "role": "",
+                    "fate": "",
+                    "xpPoints": 0,
+                    "mementos": "",
+                    "beliefs": "",
+                    "biography": ""
+                },
+                "stats": {
+                    "hp": {
+                        "value": 0,
+                        "max": 0
+                    },
+                    "movement": 0,
+                    "fatigue": {
+                        "current": 0,
+                        "max": 0
+                    },
+                    "morale": 0,
+                    "xenosis": 0
+                },
+                "saves": {
+                    "endurance": 50,
+                    "resolve": 50,
+                    "perception": 50,
+                    "agility": 50,
+                    "charisma": 50
+                },
+                "savesTotal": 250,
+                "savesRemaining": 0,
+                "skills": {
+                    "athletics": 20,
+                    "acrobatics": 10,
+                    "firstAid": 20,
+                    "lightFirearms": 30,
+                    "search": 10,
+                    "bluntMelee": 30,
+                    "brawling": 20,
+                    "stealth": 10,
+                    "acting": 0,
+                    "animalHandling": 0,
+                    "art": 0,
+                    "artillery": 0,
+                    "attractiveness": 0,
+                    "barter": 0,
+                    "bladeMelee": 0,
+                    "command": 0,
+                    "contacts": 0,
+                    "culturalIntelligence": 0,
+                    "deceive": 0,
+                    "demolitions": 0,
+                    "drive": 0,
+                    "emotionalIntelligence": 0,
+                    "endureTorture": 0,
+                    "gambling": 0,
+                    "heavyFirearms": 0,
+                    "history": 0,
+                    "interpretLanguage": 0,
+                    "intimidate": 0,
+                    "marksmanship": 0,
+                    "mechanic": 0,
+                    "medicine": 0,
+                    "mediumFirearms": 0,
+                    "mindcast": 0,
+                    "music": 0,
+                    "navigate": 0,
+                    "oration": 0,
+                    "performance": 0,
+                    "piloting": 0,
+                    "planning": 0,
+                    "reconnaissance": 0,
+                    "ride": 0,
+                    "sleightOfHand": 0,
+                    "streetwise": 0,
+                    "survival": 0,
+                    "swimming": 0,
+                    "tactics": 0,
+                    "technology": 0,
+                    "tracking": 0,
+                    "xenology": 0,
+                    "xenoweapon": 0
+                },
+                "psychology": {
+                    "disorders": [
+                        {
+                            "name": "",
+                            "minimal": "",
+                            "severe": "",
+                            "critical": ""
+                        },
+                        {
+                            "name": "",
+                            "minimal": "",
+                            "severe": "",
+                            "critical": ""
+                        },
+                        {
+                            "name": "",
+                            "minimal": "",
+                            "severe": "",
+                            "critical": ""
+                        }
+                    ],
+                    "mutations": [
+                        {
+                            "name": "",
+                            "minimal": "",
+                            "severe": "",
+                            "critical": ""
+                        },
+                        {
+                            "name": "",
+                            "minimal": "",
+                            "severe": "",
+                            "critical": ""
+                        },
+                        {
+                            "name": "",
+                            "minimal": "",
+                            "severe": "",
+                            "critical": ""
+                        }
+                    ]
+                },
+                "traits": "",
+                "abilities": ""
+            }
+        }
+    },
+    "Item": {
+        "types": [
+            "weapon",
+            "armor",
+            "utility",
+            "genomes",
+            "consumables",
+            "miscellanous",
+            "vehicle"
+        ],
+        "values": [
+            "common",
+            "valuable",
+            "rare",
+            "legendary"
+        ],
+        "templates": {
+            "itemDescription": {
+                "description": ""
+            }
+        },
+        "weapon": {
+            "attackWith": "Guns",
+            "value": "Common",
+            "skillUsed": "",
+            "skillModifier": 0,
+            "damage": 0,
+            "range": 0,
+            "damageRadius": 0,
+            "concealment": 0,
+            "durability": 0,
+            "weight": 0,
+            "loaded": 0,
+            "magazines": "2x .357",
+            "templates": [ "itemDescription" ]
+        },
+        "armor": {
+            "protectionValue": 0,
+            "value": "Common",
+            "bodyPart": "Torso",
+            "concealment": 0,
+            "inventorySlot": 0,
+            "weight": 0,
+            "durability": 0,
+            "templates": [ "itemDescription" ],
+            "insulation": 0
+        },
+        "utility": {
+            "utilityValue": "Tool",
+            "value": "Common",
+            "skillUsed": "",
+            "skillModifier": 0,
+            "templates": [ "itemDescription" ],
+            "durability": 0,
+            "weight": 0
+        },
+        "consumables": {
+            "templates": [ "itemDescription" ],
+            "healthRegen": 0,
+            "weight": 0
+        },
+        "genomes": {
+            "templates": [ "itemDescription" ],
+            "genomeValue": "Mutation",
+            "value": "Common",
+            "difficulty": 0,
+            "xenosisGain": 0,
+            "abilityTrait": ""
+        },
+        "miscellanous": {
+            "templates": [ "itemDescription" ],
+            "weight": 0
+        },
+        "vehicle": {
+            "templates": [ "itemDescription" ],
+                "value": "Common",
+                "durability": 0,
+                "spFront": 0,
+                "spSide": 0,
+                "spBack": 0,
+                "travelSpeed": 0,
+                "combatSpeed": 0,
+                "fuelConsumption": 0,
+                "fuelCurrent": 0,
+                "fuelMax": 0,
+                "inventorySlots": 0,
+                "weapons": ""
+        }
+    }
+}
