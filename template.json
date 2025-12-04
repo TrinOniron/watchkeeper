@@ -193,6 +193,49 @@
                         }
                     ]
                 },
+                "injuries": {
+                    "skull": {
+                        "severity": null,
+                        "stabilized": false
+                    },
+                    "face": {
+                        "severity": null,
+                        "stabilized": false
+                    },
+                    "chest": {
+                        "severity": null,
+                        "stabilized": false
+                    },
+                    "rightArm": {
+                        "severity": null,
+                        "stabilized": false
+                    },
+                    "leftArm": {
+                        "severity": null,
+                        "stabilized": false
+                    },
+                    "abdomen": {
+                        "severity": null,
+                        "stabilized": false
+                    },
+                    "rightLeg": {
+                        "severity": null,
+                        "stabilized": false
+                    },
+                    "leftLeg": {
+                        "severity": null,
+                        "stabilized": false
+                    }
+                },
+                "genomes": [
+                    {
+                        "id": "",
+                        "name": "",
+                        "img": "",
+                        "description": "",
+                        "effects": ""
+                    }
+                ],
                 "traits": "",
                 "abilities": ""
             }
@@ -224,13 +267,13 @@
             "value": "Common",
             "skillUsed": "",
             "skillModifier": 0,
-            "damage": 0,
+            "damage": "",
             "range": 0,
             "damageRadius": 0,
             "concealment": 0,
             "durability": 0,
             "weight": 0,
-            "loaded": 0,
+            "loaded": false,
             "magazines": "2x .357",
             "templates": [ "itemDescription" ]
         },

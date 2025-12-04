@@ -20,9 +20,18 @@
             <label>{{labels.attackWith}}</label>
             <select name="system.attackWith">
                 {{#select system.attackWith}}
-                <option value="guns">{{localize "watchkeeper.attack.guns"}}</option>
+
                 <option value="melee">{{localize "watchkeeper.attack.melee"}}</option>
-                <option value="creature">{{localize "watchkeeper.attack.creature"}}</option>
+                <option value="brawling">{{localize "watchkeeper.attack.brawling"}}</option>
+                <option value="blade">{{localize "watchkeeper.attack.blade"}}</option>
+                <option value="lightFirearms">{{localize "watchkeeper.attack.lightFirearms"}}</option>
+                <option value="mediumFirearms">{{localize "watchkeeper.attack.mediumFirearms"}}</option>
+                <option value="marksmanship">{{localize "watchkeeper.attack.marksmanship"}}</option>
+                <option value="heavyFirearms">{{localize "watchkeeper.attack.heavyFirearms"}}</option>
+                <option value="demolitions">{{localize "watchkeeper.attack.demolitions"}}</option>
+                <option value="artillery">{{localize "watchkeeper.attack.artillery"}}</option>
+                <option value="xenoweapon">{{localize "watchkeeper.attack.xenoweapon"}}</option>
+                
                 {{/select}}
             </select>
         </div>
@@ -47,7 +56,7 @@
         </div>
         <div class="form-group">
             <label>{{labels.damage}}</label>
-            <input type="number" name="system.damage" value="{{system.damage}}" />
+            <input type="text" name="system.damage" value="{{system.damage}}" />
         </div>
         <div class="form-group">
             <label>{{labels.range}}</label>
@@ -71,7 +80,7 @@
         </div>
         <div class="form-group">
             <label>{{labels.loaded}}</label>
-            <input type="checkbox" name="system.loaded" value="{{system.loaded}}" />
+            <input type="checkbox" name="system.loaded" {{checked system.loaded}} />
         </div>
 
         <div class="form-group">

@@ -85,9 +85,11 @@ export class WKnamedCharacterSheet extends ActorSheet {
         context.system.savesRemaining = 250 - totalSavesSpent;
         
         // Calculate max fatigue if not manually set
-        if (context.system.stats.fatigue.max === 0) {
+          if (context.system.stats.fatigue.max === 0) {
+            // Use saves.endurance instead of attributes.endurance
             context.system.stats.fatigue.max = Math.floor(context.system.saves.endurance / 4);
-        }
+          }
+
 
         // Prepare items with localized type labels
         context.items = context.actor.items.map(item => ({
@@ -117,9 +119,86 @@ export class WKnamedCharacterSheet extends ActorSheet {
             zealot: game.i18n.localize("watchkeeper.fate.zealot")
         };
 
+       // Prepare genomes from system.genomes array
+       context.system.genomes = context.system.genomes || [];
+       // Ensure genomes is always an array
+       context.system.genomes = Array.isArray(context.system.genomes) 
+       ? context.system.genomes 
+       : [];
+  
+      // Initialize injuries if not present
+      context.system.injuries = context.system.injuries || {
+        skull: { severity: null, stabilized: false },
+        face: { severity: null, stabilized: false },
+        chest: { severity: null, stabilized: false },
+        rightArm: { severity: null, stabilized: false },
+        leftArm: { severity: null, stabilized: false },
+        abdomen: { severity: null, stabilized: false },
+        rightLeg: { severity: null, stabilized: false },
+        leftLeg: { severity: null, stabilized: false }
+      };
+      // Get all items
+          const allItems = context.actor.items;
+  
+          // Calculate available slots from apparel
+          context.availableSlots = this.actor.items
+            .filter(i => i.type === 'armor' && i.system.equipped === 'apparel')
+            .reduce((sum, item) => sum + (item.system.inventorySlot || 0), 0);
+  
+          // Calculate used slots from inventory items
+          context.usedSlots = this.actor.items
+            .filter(i => i.system.inInventory)
+            .reduce((sum, item) => sum + (item.system.weight || 0), 0);
+  
+          // Calculate if over limit
+          context.overLimit = context.usedSlots > context.availableSlots;
+
+
+          // Calculate available slots from equipped apparel
+          context.availableSlots = this.actor.items
+            .filter(i => i.type === 'armor' && i.system.equipped === 'apparel')
+            .reduce((sum, item) => {
+              const slots = parseInt(item.system.inventorySlot) || 0;
+              return sum + slots;
+            }, 0);
+  
+          
+
+          // Categorize items
+          context.primaryItems = this.actor.items.filter(i => 
+            i.system.equipped === 'primary');
+          context.secondaryItems = this.actor.items.filter(i => 
+            i.system.equipped === 'secondary');
+          context.tertiaryItems = this.actor.items.filter(i => 
+            i.system.equipped === 'tertiary');
+          context.apparelItems = this.actor.items.filter(i => 
+            i.type === 'armor' && i.system.equipped === 'apparel');
+          context.inventoryItems = this.actor.items.filter(i => 
+            i.system.equipped === 'inventory');
+
+            // Calculate used slots from items marked as in inventory
+          context.usedSlots = this.actor.items
+            .filter(i => i.system.equipped === 'inventory')
+            .reduce((sum, item) => {
+              const weight = parseInt(item.system.weight) || 0;
+              return sum + weight;
+            }, 0);
+            console.log("Available Slots:", context.availableSlots);
+            console.log("Used Slots:", context.usedSlots);
+            console.log("Apparel Items:", context.apparelItems.map(i => i.name));
+            console.log("Inventory Items:", context.inventoryItems.map(i => i.name));
+          // Register Handlebars helpers
+        this._registerHandlebarsHelpers();
         return context;
     }
 
+      _registerHandlebarsHelpers() {
+    // Register helper to localize item types
+    Handlebars.registerHelper('localizeItemType', (type) => {
+      return game.i18n.localize(`watchkeeper.item.types.${type}`);
+    });
+    
+     }
     activateListeners(html) {
         super.activateListeners(html);
 
@@ -129,7 +208,9 @@ export class WKnamedCharacterSheet extends ActorSheet {
         );
 
         // Psychology input handling
-        html.find('.psychology-section input').on('input', this._onPsychologyInputChange.bind(this));
+       
+        //html.find('.psychology-section input').on('input', this._onPsychologyInputChange.bind(this));
+        html.find('.psychology-section input').on('blur', this._onPsychologyInputChange.bind(this)); //reverse typing fix
 
         // Save point controls
         html.find(".save-increase").click(this._onSaveIncrease.bind(this));
@@ -141,33 +222,120 @@ export class WKnamedCharacterSheet extends ActorSheet {
         html.find(".current-fatigue, .max-fatigue").on("change", this._onFatigueChange.bind(this));
         
         // Item management
-        html.find(".item-edit").click(this._onItemEdit.bind(this));
-        html.find(".item-delete").click(this._onItemDelete.bind(this));
-        html.find(".item-create").click(this._onItemCreate.bind(this));
-        html.find(".item").each((i, li) => {
-            li.setAttribute("draggable", true);
-            li.addEventListener("dragstart", this._onDragStart.bind(this), false);
-        });
+
+
+        // Injury severity cells
+          html.find('.injury-cell').click(this._onInjuryCellClick.bind(this));
+  
+          // Stabilization checkboxes
+          html.find('.stabilized-checkbox').change(this._onStabilizedChange.bind(this));
+  
+          // Genome drop zone
+          const dropZone = html.find('.genomes-dropzone')[0];
+          if (dropZone) {
+            dropZone.addEventListener('dragover', this._onDragOver.bind(this));
+            dropZone.addEventListener('drop', this._onGenomeDrop.bind(this));
+          }
+  
+          // Genome removal
+          html.find('.remove-genome').click(this._onRemoveGenome.bind(this));
+
+          //  Inventory Drop Zone (Forces Equipped = false)
+          // We bind to the specific list or the whole inventory section
+          const inventoryDropZone = html.find('.inventory-list')[0]; 
+          if (inventoryDropZone) {
+            inventoryDropZone.addEventListener('drop', this._onInventoryDrop.bind(this));
+          }
+          // Roll handlers
+          html.find('.rollable').click(this._onRollClick.bind(this));
+  
+          // Edit/delete handlers
+          html.find('.item-edit').click(this._onIventoryItemEdit.bind(this));
+          html.find('.item-delete').click(this._onIventoryItemDelete.bind(this));
+  
+          // Setup drop zones
+         
+          html.find('.equipment-table, .apparel-section, .inventory-items').each((i, zone) => {
+              zone.addEventListener('dragover', this._onItemDragOver.bind(this));
+              zone.addEventListener('drop', event => {
+                const zoneType = event.currentTarget.dataset.dropzone;
+                this._onItemDrop(event, zoneType);
+              });
+            });
+            Hooks.on("updateItem", (item, change) => {
+              if (item.parent === this.actor) {
+                this.render();
+              }
+            });
+
+            Hooks.on("createItem", (item, options, userId) => {
+              if (item.parent === this.actor) {
+                this.render();
+              }
+            });
+
+            Hooks.on("deleteItem", (item, options, userId) => {
+              if (item.parent === this.actor) {
+                this.render();
+              }
+            });
+            html.find('tr[data-item-id]').each((i, row) => {
+              row.setAttribute('draggable', true);
+              row.addEventListener('dragstart', this._onItemDragStart.bind(this));
+            });
+            Hooks.on('updateActor', (actor, data) => {
+              if (actor.id === this.actor.id) {
+                this.render(true);
+              }
+            });
+            // Refresh sheet when items change
+            Hooks.once('renderActorSheet', (app, html, data) => {
+              if (app.actor.id === this.actor.id) {
+                Hooks.on('updateItem', (item, change) => {
+                  if (item.parent === this.actor) this.render();
+                });
+    
+                Hooks.on('deleteItem', (item, options, userId) => {
+                  if (item.parent === this.actor) this.render();
+                });
+              }
+            });
     }
 
     // Psychology input handler
     _onPsychologyInputChange(event) {
+
         const input = event.currentTarget;
-        const name = input.name;
-        const value = input.value;
+        //console.warn("Input : ", input);
+        const tr = input.closest('tr');
         
-        this.actor.update({ [name]: value });
-        this._updateCellBackground(input);
+        const isDisorder = input.name.includes('disorder');
+        const type = isDisorder ? 'disorders' : 'mutations';
+        //console.warn("Type : ", type);
+        const field = input.name.split('.')[4]; // "name", "minimal", etc.
+        
+        //console.warn("Field : ", field);
+        //const index = tr.dataset.index;
+        const index = event.currentTarget.getAttribute("data-index");;
+        //console.warn("Index : ", index);
+        const value = input.value;
+        //console.warn("Value : ", value);
+        // Get current data
+
+        const currentData = this.actor.system.psychology[type][index];
+  
+        // Update specific field
+        currentData[field] = input.value;
+  
+        // Update actor
+        this.actor.update({
+        [`system.psychology.${type}.${index}`]: currentData
+        });
+  
+        
     }
 
-    _updateCellBackground(input) {
-        const level = input.dataset.level;
-        input.classList.remove('minimal-bg', 'severe-bg', 'critical-bg');
-        
-        if (input.value.trim() !== '') {
-            input.classList.add(`${level}-bg`);
-        }
-    }
+    
 
     // Item handlers
     _onItemCreate(event) {
@@ -236,7 +404,7 @@ export class WKnamedCharacterSheet extends ActorSheet {
 
     // Fatigue system handlers
     _onEnduranceChange(event) {
-        const newEndurance = parseInt(event.target.value) || 0;
+        /*const newEndurance = parseInt(event.target.value) || 0;
         const updates = {
             "system.saves.endurance": newEndurance
         };
@@ -245,7 +413,23 @@ export class WKnamedCharacterSheet extends ActorSheet {
             updates["system.stats.fatigue.max"] = Math.floor(newEndurance / 4);
         }
         
-        this.actor.update(updates);
+        this.actor.update(updates);*/
+        const newEndurance = parseInt(event.target.value) || 0;
+          const updates = {
+            "system.saves.endurance": newEndurance
+          };
+  
+          // Calculate current max fatigue based on endurance
+          //const newMaxFatigue = Math.floor(newEndurance / 4);
+          const newMaxFatigue = Math.floor(newEndurance / 4) || 0; // Add fallback
+  
+          // Always update max fatigue if it's not set or matches calculated value
+          const currentMax = this.actor.system.stats.fatigue.max;
+          if (currentMax === 0 || currentMax === Math.floor(this.actor.system.saves.endurance / 4)) {
+            updates["system.stats.fatigue.max"] = newMaxFatigue;
+          }
+  
+          this.actor.update(updates);
     }
 
     _onFatigueChange(event) {
@@ -258,5 +442,324 @@ export class WKnamedCharacterSheet extends ActorSheet {
         }
         
         this.actor.update({ [field]: value });
+    }
+    _onInjuryCellClick(event) {
+      const cell = event.currentTarget;
+      const part = cell.dataset.part;
+      const severity = cell.dataset.severity;
+  
+      // Toggle severity
+      const currentSeverity = this.actor.system.injuries[part].severity;
+      const newSeverity = currentSeverity === severity ? null : severity;
+  
+      this.actor.update({
+        [`system.injuries.${part}.severity`]: newSeverity
+      });
+    }
+
+    _onStabilizedChange(event) {
+      const checkbox = event.currentTarget;
+      const part = checkbox.name.split('.')[2]; // system.injuries.part.stabilized
+      const stabilized = checkbox.checked;
+  
+      this.actor.update({
+        [`system.injuries.${part}.stabilized`]: stabilized
+      });
+    }
+
+    _onDragOver(event) {
+      event.preventDefault();
+      event.dataTransfer.dropEffect = 'copy';
+      event.currentTarget.style.borderColor = '#ff9d00';
+    }
+
+    async _onGenomeDrop(event) {
+      console.warn("Genome drop");
+      event.preventDefault();
+      event.stopPropagation(); // Prevent default Foundry drop behavior
+      const dropzone = event.currentTarget;
+      dropzone.style.borderColor = '#666';
+  
+      try {
+        // Get dropped item data
+        const data = JSON.parse(event.dataTransfer.getData('text/plain'));
+        if (data.type !== 'Item') return;
+    
+        // Get item from Foundry
+        const item = await Item.implementation.fromDropData(data);
+        if (item.type !== 'genomes') return;
+    
+        // Create genome copy without adding to inventory
+        const genomeData = {
+          id: item.id,
+          name: item.name,
+          img: item.img,
+          description: item.system.description || "",
+          effects: item.system.effects || ""
+        };
+        console.warn("Genome data", genomeData);
+        // Safely get current genomes
+        const currentGenomes = Array.isArray(this.actor.system.genomes) 
+        ? this.actor.system.genomes 
+        : [];
+        // Update actor - add to genomes array
+        await this.actor.update({
+        "system.genomes": [...currentGenomes, genomeData]
+        });
+      } catch (err) {
+        console.error("Error handling genome drop:", err);
+      }
+    }
+
+    _onRemoveGenome(event) {
+      const button = event.currentTarget;
+      const index = button.closest('.genome-item').dataset.index;
+  
+      // Remove genome from array
+      const genomes = [...this.actor.system.genomes];
+      genomes.splice(index, 1);
+  
+      this.actor.update({"system.genomes": genomes});
+    }
+
+  /**
+   * Handles dropping items into the Inventory (Carried) section
+   */
+  async _onInventoryDrop(event) {
+  console.warn("Inventory drop");
+    // We only want to intercept GENOMES. 
+    // Let default Foundry behavior handle weapons/armor sorting.
+    const data = TextEditor.getDragEventData(event);
+    if (data.type !== 'Item') return;
+
+    const item = await Item.fromDropData(data);
+    
+    // If it's not a genome, allow the default Foundry sheet listener to handle it (Sorting, etc.)
+    if (item.type !== 'genomes') return;
+
+    // If it IS a genome, we take control to ensure it is "unequipped"
+    event.preventDefault();
+    event.stopPropagation();
+
+    // SCENARIO A: Moving an item already on this actor (Genomes -> Inventory)
+    if (item.parent?.id === this.actor.id) {
+      return this.actor.updateEmbeddedDocuments("Item", [{
+        _id: item.id,
+        "system.equipped": false
+      }]);
+    }
+
+    // SCENARIO B: Dropping a new item from sidebar/compendium
+    const itemData = item.toObject();
+    itemData.system.equipped = false; // Force unequipped
+    return this.actor.createEmbeddedDocuments("Item", [itemData]);
+  }
+
+    _onItemDragOver(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      event.dataTransfer.dropEffect = 'move';
+      event.currentTarget.classList.add('drag-over');
+    }
+    _onItemDragStart(event) {
+      const itemId = event.currentTarget.dataset.itemId;
+      const item = this.actor.items.get(itemId);
+  
+      if (item) {
+        const data = {
+          type: "Item",
+          id: itemId,
+          actorId: this.actor.id
+        };
+        event.dataTransfer.setData('text/plain', JSON.stringify(data));
+      }
+    }
+
+    _onIventoryItemEdit(event) {
+      const itemId = event.currentTarget.closest('tr').dataset.itemId;
+      const item = this.actor.items.get(itemId);
+      item.sheet.render(true);
+    }
+    async _onIventoryItemDelete(event) {
+      event.preventDefault();
+      const row = event.currentTarget.closest('tr');
+      const itemId = row.dataset.itemId;
+  
+      if (itemId) {
+        await this.actor.deleteEmbeddedDocuments('Item', [itemId]);
+        this.render();
+      }
+    }
+
+    async _onRollClick(event) {
+      event.preventDefault();
+      const element = event.currentTarget;
+      const rollType = element.dataset.roll;
+      // Fallback: If the ID isn't on the TD, look at the TR parent
+      const itemId = element.dataset.itemId || element.closest('tr')?.dataset.itemId;
+  
+      if (!itemId) return;
+  
+      const item = this.actor.items.get(itemId);
+      if (!item) return;
+
+        // Get the speaker for chat messages
+        const speaker = ChatMessage.getSpeaker({ actor: this.actor });
+        const rollMode = game.settings.get("core", "rollMode");
+        switch(rollType) {
+      case 'skill':
+        // Get the Actor's base skill value (e.g. 50)
+        // Adjust 'this.actor.system.skills' based on your template.json structure
+        const skillKey = item.system.skillUsed; // e.g. "Guns" or "Melee"
+        
+        // Safety check if skill exists
+        if (!skillKey || !this.actor.system.skills[skillKey]) {
+            ui.notifications.warn(`Skill "${skillKey}" not found on actor.`);
+            return;
+        }
+
+        // Get the values
+        // Assuming your actor.system.skills[key] is a number. 
+        // If it's an object like {value: 50}, use .value
+        const actorSkillValue = Number(this.actor.system.skills[skillKey]) || 0; 
+        const itemModifier = Number(item.system.skillModifier) || 0;
+        
+        const targetValue = actorSkillValue + itemModifier;
+
+        // Create the Roll
+        const roll = new Roll("1d100");
+        await roll.evaluate(); // <--- Async evaluation
+
+        // Logic
+        const success = roll.total <= targetValue;
+        const resultLabel = success ? "SUCCESS" : "FAILURE";
+        const color = success ? "green" : "red";
+
+        //  Message
+        roll.toMessage({
+            speaker: speaker,
+            flavor: `
+                <h3>${item.name}: ${skillKey} Check</h3>
+                <div>Target: <strong>${targetValue}</strong> (Skill ${actorSkillValue} + Mod ${itemModifier})</div>
+                <div style="font-weight:bold; color:${color}; font-size:1.2em; text-align:center; margin-top:5px;">
+                    ${resultLabel}
+                </div>
+            `,
+            rollMode: rollMode
+        });
+        break;
+    
+      case 'damage':
+        // Get the formula (Force string in case it was initialized as 0)
+        const damageFormula = String(item.system.damage);
+
+        // Validate
+        // We check for "0" because your template.json initializes it as 0
+        if (!damageFormula || damageFormula === "0") {
+            return ui.notifications.warn(`No damage formula defined for ${item.name}.`);
+        }
+
+        try {
+            //Create the Roll instance (Foundry parses "2d6+2" automatically)
+            const dmgRoll = new Roll(damageFormula);
+            
+            //Async Evaluation (Critical for V12/V13)
+            await dmgRoll.evaluate();
+
+            //Send to Chat
+            dmgRoll.toMessage({
+                speaker: speaker,
+                flavor: `
+                    <div class="watchkeeper-roll">
+                        <h3>${item.name} Damage</h3>
+                        <div class="roll-formula">Formula: ${damageFormula}</div>
+                    </div>
+                `,
+                rollMode: rollMode
+            });
+        } catch (err) {
+            ui.notifications.error(`Invalid damage formula: "${damageFormula}"`);
+            console.error(err);
+        }
+        break;
+    
+      case 'durability':
+        // Logic: Roll 1d10. If result > current durability, item breaks?
+        // For now, keeping your 1d10 roll logic.
+        const durRoll = new Roll("1d10");
+        await durRoll.evaluate();
+
+        durRoll.toMessage({
+            speaker: speaker,
+            flavor: `<h3>${item.name} Durability Check</h3>`,
+            rollMode: rollMode
+        });
+        break;
+    }
+    }
+
+    async _onItemDrop(event, equipLocation) {
+      event.preventDefault();
+      event.stopPropagation();
+  
+      // Remove drag-over styling
+      event.currentTarget.classList.remove('drag-over');
+  
+      const data = JSON.parse(event.dataTransfer.getData('text/plain'));
+  
+      if (data.type === 'Item') {
+        try {
+          // Handle items within same actor
+          if (data.actorId === this.actor.id) {
+            const item = this.actor.items.get(data.id);
+            // Handle apparel drops
+            if (equipLocation === 'apparel') {
+            
+              // Only allow armor items in apparel section
+              if (item.type === 'armor') {
+                await item.update({"system.equipped": "apparel",
+              // Reset inventory status
+              "system.inInventory": false});
+              } else {
+                ui.notifications.warn("Only armor items can be equipped as apparel.");
+              }
+            } 
+            // For equipment moves
+            else if (['primary', 'secondary', 'tertiary'].includes(equipLocation)) {
+              await item.update({"system.equipped": equipLocation});
+            } 
+            // Move to inventory
+            else if (equipLocation === 'inventory') {
+              await item.update({"system.equipped": "inventory"});
+            }
+          } 
+          // Handle new items
+          else {
+            const item = await Item.implementation.fromDropData(data);
+            const itemData = foundry.utils.duplicate(item.toObject());
+           // Handle apparel drops
+            if (equipLocation === 'apparel') {
+              // Only allow armor items in apparel section
+              if (itemData.type === 'armor') {
+                itemData.system.equipped = 'apparel';
+                itemData.system.inInventory = false;
+                await this.actor.createEmbeddedDocuments('Item', [itemData]);
+              } else {
+                ui.notifications.warn("Only armor items can be equipped as apparel.");
+              }
+
+            } 
+            // Handle other drops
+            else {
+              itemData.system.equipped = equipLocation;
+              await this.actor.createEmbeddedDocuments('Item', [itemData]);
+            }
+          }
+           this.render(true);
+        } catch (err) {
+          console.error("Error handling item drop:", err);
+        }
+      }
+
     }
 }

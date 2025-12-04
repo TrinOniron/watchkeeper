@@ -24,11 +24,10 @@ export class WKitemSheet extends ItemSheet {
   _registerHandlebarsHelpers() {
     // Register helper to localize item types
     Handlebars.registerHelper('localizeItemType', (type) => {
-      return game.i18n.localize(`watchkeeper.item.types.${type}`);
+      const key = `watchkeeper.item.types.${type}`;
+      return game.i18n?.has(key) ? game.i18n.localize(key) : type;
     });
-        /*Handlebars.registerHelper('localizeValues', (values) => {
-      return game.i18n.localize(`watchkeeper.item.values.${values}`);
-    });*/
+
   }
 
   _getFieldLabels() {
@@ -54,7 +53,7 @@ export class WKitemSheet extends ItemSheet {
       inventorySlot: game.i18n.localize("watchkeeper.item.fields.inventorySlot"),
       //utility
       utilityValue: game.i18n.localize("watchkeeper.item.fields.utilityValue"),
-      //genome
+      //genomes
       genomeValue: game.i18n.localize("watchkeeper.item.fields.genomeValue"),
       difficulty: game.i18n.localize("watchkeeper.item.fields.difficulty"),
       xenosisGain: game.i18n.localize("watchkeeper.item.fields.xenosisGain"),
@@ -104,21 +103,18 @@ export class WKitemSheet extends ItemSheet {
 
   activateListeners(html) {
     super.activateListeners(html);
-    html.find('input, select, textarea').on('change', this._onChangeInput.bind(this));
+    html.find('input, select, textarea, checkbox').on('change', this._onChangeInput.bind(this));
 
   
-  // Register Handlebars helper
-  Handlebars.registerHelper('localizeItemType', function(type) {
-    return game.i18n.localize(`watchkeeper.item.types.${type}`);
-  });
-   /* Handlebars.registerHelper('localizeValues', function(type) {
-    return game.i18n.localize(`watchkeeper.item.values.${type}`);
-  });*/
-}// In _onItemCreate method
+
+
+}
+// In _onItemCreate method
 _onItemCreate(event) {
-  
+  const type = "vehicle"; // Should be dynamic
   
   if (type === "vehicle") {
+    
     itemData.system = {
       value: game.i18n.localize("watchkeeper.item.fields.values.common"),
       durability: 100,
@@ -142,11 +138,11 @@ _onItemCreate(event) {
     const element = event.currentTarget;
     const value = element.value;
     const name = element.name;
-    
-    if (element.type === "checkbox") {
+    this.item.update({[name]: value});
+    /*if (element.type === "checkbox") {
       this.item.update({[name]: element.checked});
     } else {
       this.item.update({[name]: value});
-    }
+    }*/
   }
 }
