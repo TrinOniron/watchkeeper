@@ -70,7 +70,7 @@
             "SelectMinimal": "Minimal",
             "SelectSevere": "Severe",
             "SelectCritical": "Critical",
-            "InjuryGenomes": "INJURY & GENOMES",
+            "InjuryGenomes": "Injury & Genomes",
             "InjuryTable": "INJURY TABLE",
             "BodyPart": "Body Part",
             "Bleeding": "Bleeding",
@@ -204,7 +204,7 @@
         "Agility": "Agility",
         "Charisma": "Charisma",
         "PointsRemaining": "Points Remaining",
-        "TotalPoints": "Total Points: 250",
+        "TotalPoints": "Total Points: ",
         "Details": "Details",
         "item": {
             "types": {
