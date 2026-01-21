@@ -33,24 +33,24 @@ export class WKnamedCharacterSheet extends ActorSheet {
                 role: "",
                 fate: "",
                 mementos: "",
-                beliefs: "",
+                beliefs: ""
             },
             stats: {
                 hp: { value: 0, max: 10 },
                 movement: 0,
                 fatigue: { current: 0, max: 0 },
                 morale: 0,
-                xenosis: 0,
+                xenosis: 0
             },
             skills: {
                 athletics: 20,
                 acrobatics: 10,
-                firstAid: 20,
-                lightFirearms: 30,
+                firstaid: 20,
+                lightfirearms: 30,
                 search: 10,
-                bluntMelee: 30,
+                bluntmelee: 30,
                 brawling: 20,
-                stealth: 10,
+                stealth: 10
                 // ... all other skills with default values ...
             },
             psychology: {
@@ -76,13 +76,13 @@ export class WKnamedCharacterSheet extends ActorSheet {
                 charisma: 50
             }
         };
-
+       
         // Merge defaults with existing data
         context.system = foundry.utils.mergeObject(defaultData, systemData);
         
         // Calculate derived stats
         const totalSavesSpent = Object.values(context.system.saves).reduce((sum, val) => sum + val, 0);
-        context.system.savesRemaining = 250 - totalSavesSpent;
+        context.system.savesRemaining = (systemData.savesTotal || 250) - totalSavesSpent;
         
         // Calculate max fatigue if not manually set
           if (context.system.stats.fatigue.max === 0) {
@@ -206,6 +206,8 @@ export class WKnamedCharacterSheet extends ActorSheet {
         Handlebars.registerHelper("localizeItemType", type => 
             game.i18n.localize(`watchkeeper.item.types.${type}`)
         );
+        //Register the Skill Click Listener
+        html.find('.skill-roll').click(this._onSkillRoll.bind(this));
 
         // Psychology input handling
        
@@ -216,11 +218,14 @@ export class WKnamedCharacterSheet extends ActorSheet {
         html.find(".save-increase").click(this._onSaveIncrease.bind(this));
         html.find(".save-decrease").click(this._onSaveDecrease.bind(this));
         html.find(".saves-section input").on("change", this._onSaveInput.bind(this));
-        
+        // Total points controls
+        html.find('.increment-total').click(this._onIncrementTotal.bind(this));
+        html.find('.decrement-total').click(this._onDecrementTotal.bind(this));
         // Fatigue system
         html.find('input[name="system.saves.endurance"]').on("change", this._onEnduranceChange.bind(this));
         html.find(".current-fatigue, .max-fatigue").on("change", this._onFatigueChange.bind(this));
-        
+        //Register the Saves Click Listener
+        html.find('.saves-roll').click(this._onSavesRoll.bind(this));
         // Item management
 
 
@@ -335,7 +340,107 @@ export class WKnamedCharacterSheet extends ActorSheet {
         
     }
 
+    //Skill roll handler
+    async _onSkillRoll(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
     
+    // Get the key (e.g., "athletics")
+    const skillKey = element.dataset.key;
+
+    // Get the value from the Actor data
+    // Based on your template.json, skills are numbers like: "athletics": 20
+    const skillValue = this.actor.system.skills[skillKey];
+
+    // Safety Check
+    if (skillValue === undefined) {
+      return ui.notifications.error(`Skill "${skillKey}" not found in system data.`);
+    }
+
+    // Perform the Async Roll
+    const roll = new Roll("1d100");
+    await roll.evaluate();
+
+    // Determine Success (Equal to or Under)
+    const isSuccess = roll.total <= skillValue;
+    const resultLabel = isSuccess ? "SUCCESS" : "FAILURE";
+    const resultColor = isSuccess ? "green" : "red";
+
+    // Create Chat Message
+    const speaker = ChatMessage.getSpeaker({ actor: this.actor });
+    const label = game.i18n.localize(`watchkeeper.skills.${skillKey.charAt(0).toUpperCase() + skillKey.slice(1)}`); // Capitalize for label if needed, or use element.innerText
+
+    const content = `
+        <div class="watchkeeper-roll">
+            <h3>${label} Check</h3>
+            <div class="roll-details">
+                <span class="roll-target">Target: <strong>${skillValue}</strong></span>
+                <span class="roll-result">Rolled: <strong>${roll.total}</strong></span>
+            </div>
+            <hr>
+            <div style="text-align: center; font-size: 1.5em; font-weight: bold; color: ${resultColor};">
+                ${resultLabel}
+            </div>
+        </div>
+    `;
+
+    roll.toMessage({
+        speaker: speaker,
+        flavor: content,
+        rollMode: game.settings.get("core", "rollMode")
+    });
+  }
+
+  //Saves roll handler
+    async _onSavesRoll(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    
+    // Get the key (e.g., "athletics")
+    const savesKey = element.dataset.key;
+
+    // Get the value from the Actor data
+    // Based on your template.json, skills are numbers like: "athletics": 20
+    const savesValue = this.actor.system.saves[savesKey];
+
+    // Safety Check
+    if (savesValue === undefined) {
+      return ui.notifications.error(`Saves "${savesKey}" not found in system data.`);
+    }
+
+    // Perform the Async Roll
+    const roll = new Roll("1d100");
+    await roll.evaluate();
+
+    // Determine Success (Equal to or Under)
+    const isSuccess = roll.total <= savesValue;
+    const resultLabel = isSuccess ? "SUCCESS" : "FAILURE";
+    const resultColor = isSuccess ? "green" : "red";
+
+    // Create Chat Message
+    const speaker = ChatMessage.getSpeaker({ actor: this.actor });
+    const label = game.i18n.localize(`watchkeeper.skills.${savesKey.charAt(0).toUpperCase() + savesKey.slice(1)}`); // Capitalize for label if needed, or use element.innerText
+
+    const content = `
+        <div class="watchkeeper-roll">
+            <h3>${label} Check</h3>
+            <div class="roll-details">
+                <span class="roll-target">Target: <strong>${savesValue}</strong></span>
+                <span class="roll-result">Rolled: <strong>${roll.total}</strong></span>
+            </div>
+            <hr>
+            <div style="text-align: center; font-size: 1.5em; font-weight: bold; color: ${resultColor};">
+                ${resultLabel}
+            </div>
+        </div>
+    `;
+
+    roll.toMessage({
+        speaker: speaker,
+        flavor: content,
+        rollMode: game.settings.get("core", "rollMode")
+    });
+  }
 
     // Item handlers
     _onItemCreate(event) {
@@ -401,7 +506,17 @@ export class WKnamedCharacterSheet extends ActorSheet {
 
         await this.actor.update({ [`system.saves.${saveType}`]: newValue });
     }
+    _onIncrementTotal(event) {
+      const currentTotal = this.actor.system.savesTotal || 250;
+      this.actor.update({ "system.savesTotal": currentTotal + 1 });
+    }
 
+    _onDecrementTotal(event) {
+      const currentTotal = this.actor.system.savesTotal || 250;
+      this.actor.update({ 
+        "system.savesTotal": Math.max(0, currentTotal - 1) 
+      });
+    }
     // Fatigue system handlers
     _onEnduranceChange(event) {
         /*const newEndurance = parseInt(event.target.value) || 0;
@@ -610,7 +725,10 @@ export class WKnamedCharacterSheet extends ActorSheet {
       case 'skill':
         // Get the Actor's base skill value (e.g. 50)
         // Adjust 'this.actor.system.skills' based on your template.json structure
-        const skillKey = item.system.skillUsed; // e.g. "Guns" or "Melee"
+        let skillKeyClean = item.system.skillUsed.toLowerCase();
+        skillKeyClean = skillKeyClean.replace(/\s/g, '');
+        const skillKey = skillKeyClean; // e.g. "Guns" or "Melee"
+        console.log("skillKey: ", skillKey);
         
         // Safety check if skill exists
         if (!skillKey || !this.actor.system.skills[skillKey]) {
