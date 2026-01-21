@@ -1,7 +1,6 @@
 ﻿
-@import url('https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400..700; 1,400..700&display=swap'); .baskervville-regular
-
-{
+@import url('https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400..700; 1,400..700&display=swap'); 
+.baskervville-regular{
 	font-family: "Baskervville", serif;
 	font-weight: 400;
 	font-style: normal;
@@ -12,12 +11,15 @@
 	font-weight: 700;
 	font-style: normal;
 }
-
+body.game .app.window-app .window-content {
+	background: none;
+}
 /*Character Sheet*/
 .watchkeeper-sheet {
 	font-family: "Baskervville", serif;
 	background: #f0f0f0;
 	padding: 10px;
+	
 }
 
 .watchkeeper-container {
@@ -25,11 +27,36 @@
 	grid-template-columns: 1fr 1fr;
 	grid-gap: 15px;
 }
+/*Header*/
+.namedCharacterSheet-sheet, .watchkeeper-item-sheet {
+	background-color: #edeced;
+}
+.namedCharacterSheet-sheet .sheet-header .charname img {
+	display: inline-block;
+}
+.namedCharacterSheet-sheet .sheet-header .charname div {
+	display:flex;
+}
+	.namedCharacterSheet-sheet h2, .watchkeeper-item-sheet h2 {
+		background-color: black;
+		color: white;
+		font-variant: small-caps ;
+		text-align: center;
+	}
 
-.personal-section, .stats-section, .skills-section, .psychology-section, .inventory-section, .traits-section {
-	background: white;
+
+
+/*Header*/
+.personal-section, .stats-section, .skills-section, .psychology-section, .inventory-section, .traits-section, .saves-section, .injury-genomes-section {
+	background: #d9d9d9;
 	padding: 10px;
-	border: 1px solid #ccc;
+	border: 1px solid #d9d9d9;
+	border-radius: 20px;
+	color: #3d3d3c;
+	width: 90%;
+	height: 90%;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .grid-container {
@@ -47,7 +74,7 @@
 /* Skills Section */
 .skills-section {
 	margin-top: 20px;
-	border-top: 2px solid #333;
+	
 	padding-top: 15px;
 }
 
@@ -81,7 +108,18 @@
 		border: 1px solid #7a7971;
 		background: rgba(0, 0, 0, 0.05);
 	}
+	.skill-item label.skill-roll, .save-item label.saves-roll {
+		cursor: pointer;
+		transition: color 0.2s;
+		/* Optional: Add an icon or underline */
+		border-bottom: 1px dotted transparent;
+	}
 
+		.skill-item label.skill-roll:hover, .save-item label.saves-roll:hover{
+			color: var(--color-text-hyperlink); /* Or red/blue */
+			text-shadow: 0 0 8px var(--color-shadow-primary);
+			border-bottom: 1px dotted var(--color-text-hyperlink);
+		}
 .item {
 	display: flex;
 	justify-content: space-between;
@@ -93,18 +131,12 @@
 	margin-top: 5px;
 }
 
-.charname img {
-}
 
-.charname input {
-	display: none;
-}
 .fatigue-container {
 	display: flex;
 }
 .fatigue-container input {
-	background-color: white !important;
-	border: 1px solid #7a7971 !important;
+	
 	padding: 3px !important;
 	
 }
@@ -241,7 +273,7 @@
 /* INVENTORY SECTION STYLES */
 .inventory-section {
 	margin-top: 20px;
-	border-top: 2px solid #333;
+	
 	padding-top: 15px;
 }
 
@@ -371,7 +403,7 @@ tr[data-item-id] {
 /* Saves Section */
 .saves-section {
 	margin-top: 20px;
-	border-top: 2px solid #333;
+	
 	padding-top: 15px;
 }
 
@@ -445,7 +477,26 @@ tr[data-item-id] {
 	text-align: center;
 	color: #2c3e50;
 }
+.total-points-control {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	margin-top: 5px;
+}
 
+	.total-points-control input {
+		width: 60px;
+		text-align: center;
+	}
+
+	.total-points-control button {
+		width: 25px;
+		height: 25px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-weight: bold;
+	}
 /* Psychology Section */
 .psychology-section {
 	margin-top: 20px;
@@ -519,7 +570,7 @@ td {
 /* Injury and Genomes Section */
 .injury-genomes-section {
 	margin-top: 30px;
-	border-top: 2px solid #444;
+	
 	padding-top: 20px;
 }
 
@@ -801,7 +852,7 @@ td {
 		width: 100%;
 		padding: 5px;
 		border: 1px solid #7a7971;
-		background: rgba(0, 0, 0, 0.05);
+		/*background: rgba(0, 0, 0, 0.05);*/
 	}
 
 /* Vehicle Details */
