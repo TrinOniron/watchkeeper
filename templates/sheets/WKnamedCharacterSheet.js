@@ -4,11 +4,11 @@ export class WKnamedCharacterSheet extends ActorSheet {
             classes: ["watchkeeper", "sheet", "actor"],
             template: "systems/watchkeeper/templates/actor/namedCharacter.hbs",
             width: 800,
-            height: 700,
+            height: 900,
             tabs: [{
                 navSelector: ".sheet-tabs",
                 contentSelector: ".sheet-body",
-                initial: "personal",
+                initial: "tabone"
             }],
             scrollY: [".scrollable"],
         });
@@ -183,10 +183,10 @@ export class WKnamedCharacterSheet extends ActorSheet {
               const weight = parseInt(item.system.weight) || 0;
               return sum + weight;
             }, 0);
-            console.log("Available Slots:", context.availableSlots);
+            /*console.log("Available Slots:", context.availableSlots);
             console.log("Used Slots:", context.usedSlots);
             console.log("Apparel Items:", context.apparelItems.map(i => i.name));
-            console.log("Inventory Items:", context.inventoryItems.map(i => i.name));
+            console.log("Inventory Items:", context.inventoryItems.map(i => i.name));*/
           // Register Handlebars helpers
         this._registerHandlebarsHelpers();
         return context;
@@ -201,7 +201,7 @@ export class WKnamedCharacterSheet extends ActorSheet {
      }
     activateListeners(html) {
         super.activateListeners(html);
-
+        
         // Register Handlebars helper
         Handlebars.registerHelper("localizeItemType", type => 
             game.i18n.localize(`watchkeeper.item.types.${type}`)
@@ -306,7 +306,7 @@ export class WKnamedCharacterSheet extends ActorSheet {
               }
             });
     }
-
+    
     // Psychology input handler
     _onPsychologyInputChange(event) {
 
@@ -363,7 +363,7 @@ export class WKnamedCharacterSheet extends ActorSheet {
 
     // Determine Success (Equal to or Under)
     const isSuccess = roll.total <= skillValue;
-    const resultLabel = isSuccess ? "SUCCESS" : "FAILURE";
+    const resultLabel = isSuccess ? game.i18n.localize("watchkeeper.namedCharacterSheet.success") : game.i18n.localize("watchkeeper.namedCharacterSheet.failure");
     const resultColor = isSuccess ? "green" : "red";
 
     // Create Chat Message
@@ -486,9 +486,32 @@ export class WKnamedCharacterSheet extends ActorSheet {
     _onSaveInput(event) {
         const input = event.currentTarget;
         const saveType = input.name.replace("system.saves.", "");
-        const newValue = Math.clamped(parseInt(input.value) || 0, 20, 65);
+        //const newValue = Math.clamped(parseInt(input.value) || 0, 20, 65);
+        const newValue = parseInt(input.value);
         
-        this.actor.update({ [`system.saves.${saveType}`]: newValue });
+        //this.actor.update({ [`system.saves.${saveType}`]: newValue });
+        // Validate input
+          if (isNaN(newValue)) return;
+
+          const min = parseInt(input.min);
+          const max = parseInt(input.max);
+          const clampedValue = Math.min(Math.max(newValue, min), max);
+
+          // Check available points
+          const totalSpent = Object.values(this.actor.system.saves).reduce((sum, val) => sum + val, 0);
+          const currentSpentWithoutThis = totalSpent - (this.actor.system.saves[saveType] || 0);
+          const currentRemaining = (this.actor.system.savesTotal || 250) - currentSpentWithoutThis;
+
+          // Check if we have enough points
+          if (clampedValue > (this.actor.system.saves[saveType] || 0) + currentRemaining) {
+            ui.notifications.warn("Not enough points remaining!");
+            return;
+          }
+
+          // Update the value
+          this.actor.update({
+            [`system.saves.${saveType}`]: clampedValue
+          });
     }
 
     async _adjustSave(saveType, delta) {
@@ -497,9 +520,11 @@ export class WKnamedCharacterSheet extends ActorSheet {
         
         if (newValue < 20 || newValue > 65) return;
         
+        //const totalSpent = Object.values(this.actor.system.saves).reduce((sum, val) => sum + val, 0);
         const totalSpent = Object.values(this.actor.system.saves).reduce((sum, val) => sum + val, 0);
+        const currentRemaining = this.actor.system.savesTotal - totalSpent;
         
-        if (delta > 0 && (250 - totalSpent) < 1) {
+        if (delta > 0 && currentRemaining < 1) {
             ui.notifications.warn("Not enough points remaining!");
             return;
         }
