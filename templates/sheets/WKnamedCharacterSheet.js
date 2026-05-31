@@ -419,7 +419,7 @@ export class WKnamedCharacterSheet extends ActorSheet {
 
     // Create Chat Message
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
-    const label = game.i18n.localize(`watchkeeper.skills.${savesKey.charAt(0).toUpperCase() + savesKey.slice(1)}`); // Capitalize for label if needed, or use element.innerText
+    const label = game.i18n.localize(`watchkeeper.${savesKey.charAt(0).toUpperCase() + savesKey.slice(1)}`); // Capitalize for label if needed, or use element.innerText
 
     const content = `
         <div class="watchkeeper-roll">

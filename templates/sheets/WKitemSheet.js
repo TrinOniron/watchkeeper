@@ -117,7 +117,7 @@ _onItemCreate(event) {
     
     itemData.system = {
       value: game.i18n.localize("watchkeeper.item.fields.values.common"),
-      durability: 100,
+      durability: "",
       spFront: 10,
       spSide: 5,
       spBack: 3,
