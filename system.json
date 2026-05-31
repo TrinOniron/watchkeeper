@@ -13,7 +13,30 @@
             "discord": "new_age_frog"
         }
     ],
-    "version": "0.0.4",
+    "packs": [
+        {
+            "name": "weapons",
+            "label": "Premade Weapons",
+            "path": "packs/weapons",
+            "type": "Item",
+            "system": "watchkeeper"
+        },
+        {
+            "name": "armor",
+            "label": "Premade Armor",
+            "path": "packs/armor",
+            "type": "Item",
+            "system": "watchkeeper"
+        },
+        {
+            "name": "genomes",
+            "label": "Premade Genomes",
+            "path": "packs/genomes",
+            "type": "Item",
+            "system": "watchkeeper"
+        }
+    ],
+    "version": "0.0.5",
     "compatibility": {
         "minimum": 13,
         "verified": "13.345",

@@ -271,7 +271,7 @@
             "range": 0,
             "damageRadius": 0,
             "concealment": 0,
-            "durability": 0,
+            "durability": "",
             "weight": 0,
             "loaded": false,
             "magazines": "2x .357",
@@ -284,7 +284,7 @@
             "concealment": 0,
             "inventorySlot": 0,
             "weight": 0,
-            "durability": 0,
+            "durability": "",
             "templates": [ "itemDescription" ],
             "insulation": 0
         },
@@ -294,7 +294,7 @@
             "skillUsed": "",
             "skillModifier": 0,
             "templates": [ "itemDescription" ],
-            "durability": 0,
+            "durability": "",
             "weight": 0
         },
         "consumables": {
@@ -307,7 +307,7 @@
             "genomeValue": "Mutation",
             "value": "Common",
             "difficulty": "",
-            "xenosisGain": 0,
+            "xenosisGain": "",
             "abilityTrait": ""
         },
         "miscellanous": {
@@ -317,7 +317,7 @@
         "vehicle": {
             "templates": [ "itemDescription" ],
                 "value": "Common",
-                "durability": 0,
+                "durability": "",
                 "spFront": 0,
                 "spSide": 0,
                 "spBack": 0,
