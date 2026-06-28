@@ -41,57 +41,70 @@ body.game .app.window-app .window-content {
 		width: 90%;
 		margin-left: auto;
 		margin-right: auto;
+		padding-top: 2%;
 	}
 		.namedCharacterSheet-sheet .sheet-header .charname p {
 			padding: 1%;
 			padding-left: 5%;
 			box-sizing: border-box;
+			height: 1rem;
 		}
+		 
 		.namedCharacterSheet-sheet .sheet-header .charname img {
-			grid-area: 1 / 1 / 4 / 2;
+			grid-area: 1 / 1 / 5 / 2;
 		}
 
 		.namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(1) {
-			grid-area: 4 / 1 / 5 / 2;
+			grid-area: 1 / 2 / 2 / 3;
 		}
 
 		.namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(2) {
-			grid-area: 1 / 2 / 3 / 3;
+			grid-area: 2 / 2 / 3 / 3;
 		}
 
 		.namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(3) {
-			grid-area: 3 / 2 / 5 / 3;
+			grid-area: 3 / 2 / 4 / 3;
 		}
 
 		.namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(4) {
-			grid-area: 1 / 3 / 2 / 4;
+			grid-area: 4 / 2 / 5 / 3;
 		}
 
 		.namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(5) {
-			grid-area: 2 / 3 / 3 / 4;
+			grid-area: 1 / 3 / 2 / 4;
 		}
 
 		.namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(6) {
-			grid-area: 3 / 3 / 4 / 4;
+			grid-area: 2 / 3 / 3 / 4;
 		}
 
 		.namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(7) {
-			grid-area: 4 / 3 / 5 / 4;
+			grid-area: 3 / 3 / 4 / 4;
 		}
+
+		.namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(8) {
+			grid-area: 4 / 3 / 5 / 4;
+		} 
 		.namedCharacterSheet-sheet .sheet-header .charname img {
 			display: inline-block;
-			height: 100%;
+			height: 150px;
 			width: auto;
 		}
 .namedCharacterSheet-sheet .sheet-header .charname div {
 	display:flex;
 }
-	.namedCharacterSheet-sheet h2, .watchkeeper-item-sheet h2 {
-		background-color: black;
-		color: white;
-		font-variant: small-caps ;
-		text-align: center;
-	}
+		.namedCharacterSheet-sheet .sheet-header .charname input, .namedCharacterSheet-sheet .sheet-header .charname select {
+			background: none;
+			border: 0;
+			width: auto;
+			box-shadow: none;
+		}
+		.namedCharacterSheet-sheet h2, .watchkeeper-item-sheet h2 {
+			background-color: black;
+			color: white;
+			font-variant: small-caps;
+			text-align: center;
+		}
 
 .namedCharacterSheet-container input, .namedCharacterSheet-container select, .namedCharacterSheet-container textarea{
 	background-color: white;
@@ -116,7 +129,7 @@ body.game .app.window-app .window-content {
 		cursor: pointer;
 		font-weight: bold;*/
 		display: block;
-		padding: .5rem 2rem;
+		padding: .5rem 1.1rem;
 		margin-right: 0.2rem;
 		cursor: pointer;
 		font-weight: bold;
@@ -804,20 +817,23 @@ td {
 			left: 0;
 			right: 0;
 			bottom: 0;
-			background: rgba(0, 0, 0, 0.4);
+			/*background: rgba(0, 0, 0, 0.4);*/
 			z-index: 1;
 		}
 
 	.severity-cell[data-severity="bleeding"].marked {
 		background: rgba(179, 0, 0, 0.6);
+		color: white;
 	}
 
 	.severity-cell[data-severity="injury"].marked {
 		background: rgba(255, 102, 0, 0.6);
+		color: white;
 	}
 
 	.severity-cell[data-severity="mortal"].marked {
-		background: rgba(153, 0, 0, 0.6);
+		background: rgba(153, 0, 0, 1);
+		color:white;
 	}
 
 .stabilized-cell {
@@ -1021,13 +1037,13 @@ td {
 		margin-bottom: 3px;
 	}
 
-	.form-group input[type="text"], .form-group input[type="number"], .form-group select {
-		width: 100%;
-		padding: 5px;
-		background-color: white;
-		border: 0;
-		border-radius: 0;
-	}
+.watchkeeper-item-sheet .form-group input[type="text"], .watchkeeper-item-sheet .form-group input[type="number"], .watchkeeper-item-sheet .form-group select {
+	width: 100%;
+	padding: 5px;
+	background-color: white;
+	border: 0;
+	border-radius: 0;
+}
 
 /* Vehicle Details */
 .vehicle-details {
