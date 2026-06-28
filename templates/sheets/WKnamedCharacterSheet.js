@@ -368,8 +368,8 @@ export class WKnamedCharacterSheet extends ActorSheet {
 
     // Create Chat Message
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
-    const label = game.i18n.localize(`watchkeeper.skills.${skillKey.charAt(0).toUpperCase() + skillKey.slice(1)}`); // Capitalize for label if needed, or use element.innerText
-
+    //const label = game.i18n.localize(`watchkeeper.skills.${skillKey.charAt(0).toUpperCase() + skillKey.slice(1)}`); // Capitalize for label if needed, or use element.innerText
+    const label = game.i18n.localize(`watchkeeper.skills.${skillKey}`);
     const content = `
         <div class="watchkeeper-roll">
             <h3>${label} Check</h3>
@@ -777,12 +777,12 @@ export class WKnamedCharacterSheet extends ActorSheet {
         const success = roll.total <= targetValue;
         const resultLabel = success ? "SUCCESS" : "FAILURE";
         const color = success ? "green" : "red";
-
-        //  Message
+        const label = game.i18n.localize(`watchkeeper.skills.${skillKey}`);
+        //  Message  <h3>${item.name}: ${skillKey} Check</h3>
         roll.toMessage({
             speaker: speaker,
             flavor: `
-                <h3>${item.name}: ${skillKey} Check</h3>
+                <h3>${item.name}: ${label} Check</h3>
                 <div>Target: <strong>${targetValue}</strong> (Skill ${actorSkillValue} + Mod ${itemModifier})</div>
                 <div style="font-weight:bold; color:${color}; font-size:1.2em; text-align:center; margin-top:5px;">
                     ${resultLabel}
