@@ -29,9 +29,13 @@ Hooks.once("init", async () => {
     // Unregister default core sheet
     Actors.unregisterSheet("core", ActorSheet);
     // Register Custom Sheet
-    // IMPORTANT: Ensure "hero" matches the type in your template.json
+    // IMPORTANT: Ensure "insurgent" matches the type in your template.json
     Actors.registerSheet("watchkeeper", WKnamedCharacterSheet, { 
-        types: ["hero"], 
+        types: ["insurgent"], 
+        makeDefault: true
+    });
+    Actors.registerSheet("watchkeeper", WKnamedCharacterSheet, { 
+        types: ["npc"], 
         makeDefault: true
     });
 });
@@ -42,8 +46,9 @@ Hooks.once("ready", async () => {
     if(!game.user.isGM) return; 
     
     // Migrations / Data integrity checks
-    // IMPORTANT: Ensure "hero" matches the type used in init and template.json
-    const actorsToFix = game.actors.filter(a => a.type === "hero" && !a.system.psychology);
+    // IMPORTANT: Ensure "insurgent" matches the type used in init and template.json
+    const actorsToFix = game.actors.filter(a => a.type === "insurgent" && !a.system.psychology);
+    
     
     for(const actor of actorsToFix) {
         console.log(`watchkeeper | Initializing psychology for ${actor.name}`);
