@@ -1,9 +1,8 @@
  {
     "Actor": {
         "types": [
-            "hero",
-            "npc",
-            "alien"
+            "insurgent",
+            "npc"
         ],
         "templates": {
             "commonStats": {
@@ -37,9 +36,186 @@
                 "commonStats",
                 "namedCharacter"
             ],
-            "wounds": {
-                "max": 35
+            "system": {
+                "personal": {
+                    "pseudonym": "",
+                    "pronouns": "",
+                    "identity": "",
+                    "drive": "",
+                    "callsign": "",
+                    "age": 0,
+                    "height": 0,
+                    "origin": "",
+                    "role": "",
+                    "fate": "",
+                    "xpPoints": 0,
+                    "mementos": "",
+                    "beliefs": "",
+                    "biography": ""
+                },
+                "stats": {
+                    "hp": {
+                        "value": 0,
+                        "max": 0
+                    },
+                    "movement": 0,
+                    "fatigue": {
+                        "current": 0,
+                        "max": 0
+                    },
+                    "morale": 0,
+                    "xenosis": 0
+                },
+                "saves": {
+                    "endurance": 50,
+                    "resolve": 50,
+                    "perception": 50,
+                    "agility": 50,
+                    "charisma": 50
+                },
+                "savesTotal": 250,
+                "savesRemaining": 0,
+                "skills": {
+                    "athletics": 20,
+                    "acrobatics": 10,
+                    "firstaid": 20,
+                    "lightfirearms": 30,
+                    "search": 10,
+                    "bluntmelee": 30,
+                    "brawling": 20,
+                    "stealth": 10,
+                    "acting": 0,
+                    "animalhandling": 0,
+                    "art": 0,
+                    "artillery": 0,
+                    "attractiveness": 0,
+                    "barter": 0,
+                    "blademelee": 0,
+                    "command": 0,
+                    "contacts": 0,
+                    "culturalintelligence": 0,
+                    "deceive": 0,
+                    "demolitions": 0,
+                    "drive": 0,
+                    "emotionalintelligence": 0,
+                    "enduretorture": 0,
+                    "gambling": 0,
+                    "heavyfirearms": 0,
+                    "history": 0,
+                    "interpretlanguage": 0,
+                    "intimidate": 0,
+                    "marksmanship": 0,
+                    "mechanic": 0,
+                    "medicine": 0,
+                    "mediumfirearms": 0,
+                    "mindcast": 0,
+                    "music": 0,
+                    "navigate": 0,
+                    "oration": 0,
+                    "performance": 0,
+                    "piloting": 0,
+                    "planning": 0,
+                    "reconnaissance": 0,
+                    "ride": 0,
+                    "sleightofhand": 0,
+                    "streetwise": 0,
+                    "survival": 0,
+                    "swimming": 0,
+                    "tactics": 0,
+                    "technology": 0,
+                    "tracking": 0,
+                    "xenology": 0,
+                    "xenoweapon": 0
+                },
+                "psychology": {
+                    "disorders": [
+                        {
+                            "name": "",
+                            "minimal": "",
+                            "severe": "",
+                            "critical": ""
+                        },
+                        {
+                            "name": "",
+                            "minimal": "",
+                            "severe": "",
+                            "critical": ""
+                        },
+                        {
+                            "name": "",
+                            "minimal": "",
+                            "severe": "",
+                            "critical": ""
+                        }
+                    ],
+                    "mutations": [
+                        {
+                            "name": "",
+                            "minimal": "",
+                            "severe": "",
+                            "critical": ""
+                        },
+                        {
+                            "name": "",
+                            "minimal": "",
+                            "severe": "",
+                            "critical": ""
+                        },
+                        {
+                            "name": "",
+                            "minimal": "",
+                            "severe": "",
+                            "critical": ""
+                        }
+                    ]
+                },
+                "injuries": {
+                    "skull": {
+                        "severity": null,
+                        "stabilized": false
+                    },
+                    "face": {
+                        "severity": null,
+                        "stabilized": false
+                    },
+                    "chest": {
+                        "severity": null,
+                        "stabilized": false
+                    },
+                    "rightArm": {
+                        "severity": null,
+                        "stabilized": false
+                    },
+                    "leftArm": {
+                        "severity": null,
+                        "stabilized": false
+                    },
+                    "abdomen": {
+                        "severity": null,
+                        "stabilized": false
+                    },
+                    "rightLeg": {
+                        "severity": null,
+                        "stabilized": false
+                    },
+                    "leftLeg": {
+                        "severity": null,
+                        "stabilized": false
+                    }
+                },
+                "genomes": [
+                    {
+                        "id": "",
+                        "name": "",
+                        "img": "",
+                        "description": "",
+                        "effects": ""
+                    }
+                ],
+                "traits": "",
+                "abilities": ""
             }
+        
         },
         "alien": {
             "templates": [
@@ -55,7 +231,7 @@
             }
 
         },
-        "hero": {
+        "insurgent": {
             "templates": [
                 "commonStats",
                 "namedCharacter"
