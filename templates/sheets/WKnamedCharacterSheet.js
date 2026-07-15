@@ -635,7 +635,11 @@ export class WKnamedCharacterSheet extends ActorSheet {
           name: item.name,
           img: item.img,
           description: item.system.description || "",
-          effects: item.system.effects || ""
+          effects: item.system.effects || "",
+          value:  item.system.value || "",
+          difficulty:  item.system.difficulty || "",
+          xenosisGain: item.system.xenosisGain || "",
+          abilityTrait: item.system.abilityTrait || ""
         };
         console.warn("Genome data", genomeData);
         // Safely get current genomes
