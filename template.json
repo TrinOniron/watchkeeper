@@ -209,7 +209,11 @@
                         "name": "",
                         "img": "",
                         "description": "",
-                        "effects": ""
+                        "effects": "",
+                        "value": "Common",
+                        "difficulty": "",
+                        "xenosisGain": "",
+                        "abilityTrait": ""
                     }
                 ],
                 "traits": "",
