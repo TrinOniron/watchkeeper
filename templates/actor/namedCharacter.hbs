@@ -656,7 +656,7 @@
                                 <tr data-item-id="{{item.id}}">
                                     <td>{{item.name}}</td>
                                     <td>{{item.system.bodyPart}}</td>
-                                    <td>{{item.system.protectionValue}}</td>
+                                    <td>{{item.system.concealment}}</td>
                                     <td>{{item.system.inventorySlot}}</td>
                                     <td class="rollable" data-roll="durability" data-item-id="{{item.id}}">
                                         {{item.system.durability}}
@@ -811,8 +811,13 @@
                                     <img src="{{genome.img}}" width="32" height="32" />
                                     <div class="genome-info">
                                         <div class="genome-name">{{genome.name}}</div>
-                                        <div class="genome-description">{{genome.description}}</div>
+                                        
                                     </div>
+                                    <div class="genome-name">{{localize "watchkeeper.item.fields.genomeValue"}}{{genome.value}}</div>
+                                    <div class="genome-name">{{localize "watchkeeper.item.fields.difficulty"}}{{genome.difficulty}}</div>
+                                    <div class="genome-name">{{localize "watchkeeper.item.fields.xenosisGain"}}{{genome.xenosisGain}}</div>
+                                    <div class="genome-name">{{localize "watchkeeper.item.fields.abilityTrait"}}{{genome.abilityTrait}}</div>
+                                    <div class="genome-name">{{genome.description}}</div>
                                     <a class="remove-genome" title="{{localize 'watchkeeper.namedCharacterSheet.RemoveGenome'}}">
                                         <i class="fas fa-trash"></i>
                                     </a>
