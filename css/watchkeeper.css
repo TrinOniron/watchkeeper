@@ -13,9 +13,15 @@
 }
 body.game .app.window-app .window-content {
 	background: none;
+	color:black;
 }
 /*Character Sheet*/
+
 .namedCharacterSheet-sheet {
+	overflow-y: auto;
+	color: black;
+	min-height: 0;
+
 }
 .watchkeeper-sheet {
 	font-family: "Baskervville", serif;
@@ -27,12 +33,14 @@ body.game .app.window-app .window-content {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	grid-gap: 15px;
+
 }
+.window-content:has(.namedCharacterSheet-container), .window-content:has(.watchkeeper-item-sheet) {
+overflow-y:scroll;}
 /*Header*/
 .namedCharacterSheet-sheet, .watchkeeper-item-sheet {
 	background-color: #edeced;
-}
-	.namedCharacterSheet-sheet .sheet-header .charname {
+} .namedCharacterSheet-sheet .sheet-header .charname {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		grid-template-rows: repeat(4, 1fr);
@@ -42,92 +50,82 @@ body.game .app.window-app .window-content {
 		margin-left: auto;
 		margin-right: auto;
 		padding-top: 2%;
-	}
-		.namedCharacterSheet-sheet .sheet-header .charname p {
+	} .namedCharacterSheet-sheet .sheet-header .charname p {
 			padding: 1%;
 			padding-left: 5%;
 			box-sizing: border-box;
 			height: 1rem;
-		}
-		 
-		.namedCharacterSheet-sheet .sheet-header .charname img {
+		} .namedCharacterSheet-sheet .sheet-header .charname img {
 			grid-area: 1 / 1 / 5 / 2;
-		}
-
-		.namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(1) {
+		} .namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(1) {
 			grid-area: 1 / 2 / 2 / 3;
-		}
-
-		.namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(2) {
+		} .namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(2) {
 			grid-area: 2 / 2 / 3 / 3;
-		}
-
-		.namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(3) {
+		} .namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(3) {
 			grid-area: 3 / 2 / 4 / 3;
-		}
-
-		.namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(4) {
+		} .namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(4) {
 			grid-area: 4 / 2 / 5 / 3;
-		}
-
-		.namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(5) {
+		} .namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(5) {
 			grid-area: 1 / 3 / 2 / 4;
-		}
-
-		.namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(6) {
+		} .namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(6) {
 			grid-area: 2 / 3 / 3 / 4;
-		}
-
-		.namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(7) {
+		} .namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(7) {
 			grid-area: 3 / 3 / 4 / 4;
-		}
-
-		.namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(8) {
+		} .namedCharacterSheet-sheet .sheet-header .charname p:nth-of-type(8) {
 			grid-area: 4 / 3 / 5 / 4;
-		} 
-		.namedCharacterSheet-sheet .sheet-header .charname img {
-			display: inline-block;
-			height: 150px;
-			width: auto;
 		}
-.namedCharacterSheet-sheet .sheet-header .charname div {
+	.namedCharacterSheet-sheet .sheet-header .charname img {
+		display: inline-block;
+		height: 150px;
+		width: auto;
+		background: #d9d9d9;
+	} 
+	.namedCharacterSheet-sheet .sheet-header .charname div {
 	display:flex;
 }
-		.namedCharacterSheet-sheet .sheet-header .charname input, .namedCharacterSheet-sheet .sheet-header .charname select {
-			background: none;
-			border: 0;
-			width: auto;
-			box-shadow: none;
-		}
-		.namedCharacterSheet-sheet h2, .watchkeeper-item-sheet h2 {
+	.namedCharacterSheet-sheet .sheet-header .charname input, .namedCharacterSheet-sheet .sheet-header .charname select, .watchkeeper-item-sheet input, .watchkeeper-item-sheet select, .watchkeeper-item-sheet textarea {
+		background: none;
+		border: 0;
+		width: auto;
+		box-shadow: none;
+		color: black;
+	} .namedCharacterSheet-sheet h2, .watchkeeper-item-sheet h2 {
 			background-color: black;
 			color: white;
 			font-variant: small-caps;
 			text-align: center;
-		}
-
-.namedCharacterSheet-container input, .namedCharacterSheet-container select, .namedCharacterSheet-container textarea{
+		} .namedCharacterSheet-container input, .namedCharacterSheet-container select, .namedCharacterSheet-container textarea, .tab input:not([type="checkbox"]), .tab select, .tab textarea {
 	background-color: white;
 	border: 0;
 	border-radius: 0;
-}
-
+	color: black;
+} .namedCharacterSheet-container input:hover, .namedCharacterSheet-container select:hover, .namedCharacterSheet-container textarea:hover, .tab input:hover, .tab select:hover, .tab textarea:hover {
+	cursor:text;}
 /**
  * Tabs
  */
 /* Navigation Styling */
-.sheet-tabs {
+form.namedCharacterSheet-sheet {
+		height: 100%;
+		min-height: 0;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+	} form.namedCharacterSheet-sheet > .sheet-body.tab {
+		flex: 1 1 auto;
+		min-height: 0;
+		overflow-y: auto;
+		overflow-x: hidden;
+	} form.namedCharacterSheet-sheet > .sheet-body.tab:not(.active) {
+			display: none;
+		} .sheet-tabs {
 	display: flex;
 	justify-content: center;
 	align-content:center;
 	margin-bottom: 10px;
 	border:0;
-}
-	.sheet-tabs .item {
-		/*padding: 10px 20px;
-		border: 1px solid transparent;
-		cursor: pointer;
-		font-weight: bold;*/
+	gap:0;
+} .sheet-tabs .item {
 		display: block;
 		padding: .5rem 1.1rem;
 		margin-right: 0.2rem;
@@ -139,51 +137,23 @@ body.game .app.window-app .window-content {
 		position: relative;
 		height: 3rem;
 		clip-path: polygon(20% 0%, 100% 0, 100% 100%, 0 100%, 0 40%);
-		width:20%;
-	}
-		.sheet-tabs .item.active {
-			/*padding: 10px 20px;
-		border: 1px solid transparent;
-		cursor: pointer;
-		font-weight: bold;*/
+		width: 20%;
+		font-size: 13px;
+		line-height: 14px;
+	} .sheet-tabs .item.active {
+		
 			background: #fff;
 			color: black;
 			text-shadow: none;
 			border: 1px solid black;
 			clip-path: polygon(0% 0%, 100% 0, 100% 100%, 0 100%, 0 100%);
 		}
-	/*.sheet-tabs .item::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		border-top: 20px solid #edeced;
-		border-right: 30px solid transparent;
-		width: 0;
-	}*/
-		/* Highlight the active tab */
-			.sheet-tabs .item.active::before {
+/* Highlight the active tab */
+.sheet-tabs .item.active::before {
 				
 			}
+/* Hide all tabs by default
 
-
-/* Hide all tabs by default */
-.sheet-body .tab {
-	/*display: none;
-	height: 100%*/; /* Important for scrolling */
-	/*overflow-y: auto;*/
-	 order: 99;
-	// Put the tabs last flex-grow: 1;
-	width: 100%;
-	display: none;
-	border-top: 1px solid black;
-	background: #fff;
-}
-
-	/* Show the active tab */
-	.sheet-body .tab.active {
-		display: block;
-	}
 
 @media (max-width: 45em) {
 	.namedCharacterSheet-container .tabs .tab,
@@ -191,359 +161,173 @@ body.game .app.window-app .window-content {
 		order: initial;
 	}
 
-	.namedCharacterSheet-container .tabs label {
-		width: 100%;
-		margin-right: 0;
-		margin-top: 0.2rem;
-	}
-}
-
+	
+}*/
 /*Header*/
-.personal-section, .stats-section, .skills-section, .psychology-section, .inventory-section, .traits-section, .saves-section, .injury-genomes-section {
+.namedCharacterSheet-container .tabs label {
+	width: 100%;
+	margin-right: 0;
+	margin-top: 0.2rem;
+} h3 {
+	color: rgb(61, 61, 60);
+} .personal-section, .stats-section, .skills-section, .psychology-section, .inventory-section, .traits-section, .saves-section, .injury-genomes-section {
 	background: #d9d9d9;
 	padding: 10px;
 	border: 1px solid #d9d9d9;
 	border-radius: 20px;
 	color: #3d3d3c;
 	width: 100%;
-	/*height: 90%;*/
+	
 	margin-left: auto;
 	margin-right: auto;
-}
-
-.grid-container {
+} .grid-container {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	grid-gap: 5px;
-}
-.personal-section .grid-container {
+} .personal-section .grid-container {
 	grid-template-columns: 1fr 1fr 1fr 1fr;
-}
-.stats-section .grid-container {
+} .stats-section .grid-container {
 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-}
-.skills-grid {
+} .skills-grid {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	grid-gap: 5px;
+} .tab textarea {
+	width:100%;
 }
-
 /* Skills Section */
 .skills-section {
 	margin-top: 20px;
-	
 	padding-top: 15px;
-}
-
-.skills-columns {
+} .skills-columns {
 	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
 	gap: 20px;
-}
-
-.skills-column {
-	flex: 1;
-}
-
-.skill-item {
+	justify-content: space-around;
+} .skill-item {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	/*padding: 5px 0;*/
+	/* padding: 5px 0; */
 	border-bottom: 1px solid #eee;
-}
-
-	.skill-item label {
+	width: 45%;
+} .skill-item label {
 		flex: 3;
 		font-size: 0.9em;
-	}
-
-	.skill-item input {
+	} .skill-item input {
 		flex: 1;
 		max-width: 60px;
 		text-align: center;
 		padding: 3px;
 		border: 1px solid #7a7971;
 		background: rgba(0, 0, 0, 0.05);
-	}
-	.skill-item label.skill-roll, .save-item label.saves-roll {
+	} .skill-item label.skill-roll, .save-item label.saves-roll {
 		cursor: pointer;
 		transition: color 0.2s;
 		/* Optional: Add an icon or underline */
 		border-bottom: 1px dotted transparent;
-	}
-
-		.skill-item label.skill-roll:hover, .save-item label.saves-roll:hover{
+	} .skill-item label.skill-roll:hover, .save-item label.saves-roll:hover{
 			color: var(--color-text-hyperlink); /* Or red/blue */
 			text-shadow: 0 0 8px var(--color-shadow-primary);
 			border-bottom: 1px dotted var(--color-text-hyperlink);
-		}
-.item {
+		} .item {
 	display: flex;
 	justify-content: space-between;
 	padding: 3px;
 	border-bottom: 1px solid #eee;
-}
-
-.item-controls {
+} .item-controls {
 	margin-top: 5px;
-}
-
-
-.fatigue-container {
+} .fatigue-container {
 	display: flex;
-}
-.fatigue-container input {
+} .fatigue-container input {
 	
 	padding: 3px !important;
 	
-}
-
-.current-fatigue {
+} .current-fatigue {
 	border-right: none !important;
 	border-top-right-radius: 0 !important;
 	border-bottom-right-radius: 0 !important;
-}
-
-.max-fatigue {
+} .max-fatigue {
 	border-left: none !important;
 	border-top-left-radius: 0 !important;
 	border-bottom-left-radius: 0 !important;
 }
-
-/* Inventory Section */
-/*.inventory-section
-{
-	margin-top: 20px;
-	border-top: 2px solid #333;
-	padding-top: 15px;
-}
-
-.inventory-header
-{
-	display: flex;
-	font-weight: bold;
-	border-bottom: 1px solid #ccc;
-	padding-bottom: 5px;
-	margin-bottom: 5px;
-}
-
-.item-name-header, .item-type-header, .item-weight-header, .item-controls-header
-{
-	padding: 0 5px;
-}
-
-.item-name-header
-{
-	flex: 3;
-}
-
-.item-type-header
-{
-	flex: 2;
-}
-
-.item-weight-header
-{
-	flex: 1;
-}
-
-.item-controls-header
-{
-	flex: 1;
-}
-
-.inventory-list .item
-{
-	display: flex;
-	padding: 5px;
-	border-bottom: 1px solid #eee;
-	align-items: center;
-}
-
-.inventory-list .item:nth-child(odd)
-{
-	background-color: rgba(0, 0, 0, 0.05);
-}
-
-.inventory-list .item-name
-{
-	flex: 3;
-	display: flex;
-	align-items: center;
-}
-
-.inventory-list .item-name img
-{
-	margin-right: 5px;
-}
-
-.inventory-list .item-type
-{
-	flex: 2;
-}
-
-.inventory-list .item-weight
-{
-	flex: 1;
-	text-align: center;
-}
-
-.inventory-list .item-controls
-{
-	flex: 1;
-	display: flex;
-	justify-content: center;
-}
-
-.item-controls a
-{
-	margin: 0 3px;
-	font-size: 0.8em;
-}
-
-.inventory-footer
-{
-	margin-top: 15px;
-}
-
-.item-create-group
-{
-	display: flex;
-	gap: 10px;
-	align-items: center;
-}
-
-.item-type-select
-{
-	flex: 1;
-	padding: 5px;
-	border: 1px solid #7a7971;
-	background: rgba(0, 0, 0, 0.05);
-}
-
-.item-create
-{
-	flex: 0 0 auto;
-}
-
-*/
 /* INVENTORY SECTION STYLES */
 .inventory-section {
 	margin-top: 20px;
 	
 	padding-top: 15px;
-}
-
-.slots-display {
+} .inventory-section h3{margin:1%;} .equipment-table tr, .apparel-section tr, .inventory-items tr {
+		background: rgba(255,255,255,.5);
+	} .slots-display {
 	display: flex;
 	gap: 20px;
 	margin-bottom: 15px;
 	padding: 10px;
 	background: rgba(0,0,0,0.1);
 	border-radius: 4px;
-}
-
-.slot-counter {
+} .slot-counter {
 	font-weight: bold;
 	font-size: 1.1em;
-}
-
-	.slot-counter .negative {
+} .slot-counter .negative {
 		color: #ff0000;
-	}
-
-.equipment-table, .apparel-section, .inventory-items {
+	} .equipment-table, .apparel-section, .inventory-items {
 	margin-bottom: 20px;
 	border: 1px solid #444;
 	border-radius: 4px;
 	overflow: hidden;
-}
-
-table {
+} table {
 	width: 100%;
 	border-collapse: collapse;
-}
-
-th {
+} th {
 	background-color: #333;
 	color: white;
 	padding: 8px;
 	text-align: left;
-}
-
-td {
+} td {
 	padding: 8px;
 	border: 1px solid #444;
-}
-
-.rollable {
+} .rollable {
 	cursor: pointer;
 	color: #4aa5ff;
 	font-weight: bold;
-}
-
-	.rollable:hover {
+} .rollable:hover {
 		background: rgba(255, 157, 0, 0.1);
-	}
-
-.drop-placeholder td {
+	} .drop-placeholder td {
 	text-align: center;
 	color: #888;
 	font-style: italic;
-}
-
-.item-edit, .item-delete {
+} .item-edit, .item-delete {
 	padding: 0 5px;
-}
-
-.item-edit {
+} .item-edit {
 	color: #4aa5ff;
-}
-
-.item-delete {
+} .item-delete {
 	color: #ff6b6b;
-}
-
-[data-dropzone] {
+} [data-dropzone] {
 	min-height: 50px;
 	transition: all 0.3s;
-}
-
-	[data-dropzone].drag-over {
+} [data-dropzone].drag-over {
 		background: rgba(255, 157, 0, 0.2);
 		border: 2px dashed #ff9d00;
-	}
-
-.drag-over {
+	} .drag-over {
 	background: rgba(255, 157, 0, 0.2) !important;
 	border: 2px dashed #ff9d00 !important;
 	transition: all 0.3s;
-}
-
-tr[data-item-id] {
+} tr[data-item-id] {
 	cursor: grab;
-}
-
-	tr[data-item-id]:active {
+} tr[data-item-id]:active {
 		cursor: grabbing;
-	}
-
-.drag-over {
+	} .drag-over {
 	outline: 2px solid #4aa5ff;
 	box-shadow: 0 0 10px rgba(74, 165, 255, 0.5);
-}
-
-	.drag-over td {
+} .drag-over td {
 		background-color: rgba(74, 165, 255, 0.1);
-	}
-
-.over-limit {
+	} .over-limit {
 	color: #ff0000;
 	font-weight: bold;
 	animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
+} @keyframes pulse {
 	0% {
 		opacity: 1;
 	}
@@ -556,64 +340,45 @@ tr[data-item-id] {
 		opacity: 1;
 	}
 }
-
 /* Saves Section */
 .saves-section {
 	margin-top: 20px;
 	
 	padding-top: 15px;
-}
-
-.saves-controls {
+} .saves-controls {
 	/*margin-bottom: 15px;*/
 	padding: 10px;
 	background-color: #f5f5f5;
 	border-radius: 4px;
-}
-
-.points-display {
+} .points-display {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-}
-
-.remaining-points {
+} .remaining-points {
 	font-weight: bold;
-}
-
-.points-value {
+} .points-value {
 	font-size: 1.2em;
 	color: #e74c3c;
-}
-
-.saves-grid {
+} .saves-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 	/*gap: 15px;*/
-}
-
-.save-item {
+} .save-item {
 	display: flex;
 	flex-direction: column;
 	padding: 10px;
 	border: 1px solid #ddd;
 	border-radius: 4px;
 	background-color: #fff;
-}
-
-	.save-item label {
+} .save-item label {
 		font-weight: bold;
 		margin-bottom: 5px;
 		text-align:center;
-	}
-
-.save-controls {
+	} .save-controls {
 	display: flex;
 	align-items: center;
 	margin-bottom: 5px;
-}
-
-	.save-controls button {
+} .save-controls button {
 		width: 30px;
 		height: 30px;
 		font-size: 1.2em;
@@ -621,34 +386,25 @@ tr[data-item-id] {
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
-	}
-
-	.save-controls input {
+	} .save-controls input {
 		flex: 1;
 		margin: 0 5px;
 		text-align: center;
-	}
-
-.save-value {
+	} .save-value {
 	font-size: 1.2em;
 	font-weight: bold;
 	text-align: center;
 	color: #2c3e50;
 	display:none;
-}
-.total-points-control {
+} .total-points-control {
 	display: flex;
 	align-items: center;
 	gap: 5px;
 	margin-top: 5px;
-}
-
-	.total-points-control input {
+} .total-points-control input {
 		width: 60px;
 		text-align: center;
-	}
-
-	.total-points-control button {
+	} .total-points-control button {
 		width: 25px;
 		height: 25px;
 		display: flex;
@@ -659,65 +415,47 @@ tr[data-item-id] {
 /* Psychology Section */
 .psychology-section {
 	margin-top: 20px;
-}
-
-.table-container {
+} .table-container {
 	margin-bottom: 30px;
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	overflow: hidden;
-}
-
-table {
+} table {
 	width: 100%;
 	border-collapse: collapse;
-}
-
-th {
+} th {
 	background-color: #333;
 	color: white;
 	padding: 8px;
 	text-align: left;
-}
-
-td {
+} td {
 	padding: 0;
 	border: 1px solid #ddd;
-}
-
-.name-cell input {
+} .name-cell input {
 	width: 100%;
 	padding: 8px;
 	border: none;
-	background: transparent;
+	background: transparent !important;
 	font-weight: bold;
-}
-
-.level-cell input {
+} .level-cell input {
 	width: 100%;
 	padding: 8px;
 	border: none;
 	background: transparent;
 	transition: background-color 0.3s;
 }
-
 /* Background colors */
 .minimal-bg {
 	background-color: #ffff00 !important;
 	/* Yellow */
-}
-
-.severe-bg {
+} .severe-bg {
 	background-color: #ffa500 !important;
 	/* Orange */
-}
-
-.critical-bg {
+} .critical-bg {
 	background-color: #ff0000 !important;
 	/* Red */
 	color: white;
 }
-
 /* Focus states */
 .psychology-section input:focus {
 	outline: none;
@@ -725,22 +463,17 @@ td {
 	z-index: 1;
 	position: relative;
 }
-
 /* Injury and Genomes Section */
 .injury-genomes-section {
 	margin-top: 30px;
 	
 	padding-top: 20px;
-}
-
-.injury-genomes-container {
+} .injury-genomes-container {
 	display: block;
 	gap: 20px;
 	margin-top: 15px;
 	flex-wrap: wrap;
-}
-
-.injury-section, .genomes-section {
+} .injury-section, .genomes-section {
 	display: flex;
 	flex: 1;
 	background: rgba(0, 0, 0, 0.2);
@@ -748,69 +481,47 @@ td {
 	border-radius: 5px;
 	border: 1px solid #555;
 	margin-bottom: 20px;
-}
-
-.injury-header {
+} .injury-header {
 	display: flex;
 	align-items: center;
 	gap: 10px;
 	margin-bottom: 15px;
-}
-
-.silhouette-container {
+} .silhouette-container {
 	width: 150px;
 	height: 250px;
 	background: none;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-}
-
-	.silhouette-container img {
+} .silhouette-container img {
 		opacity: 0.7;
 		border: 0;
-	}
-
-.injury-table {
+	} .injury-table {
 	border-collapse: collapse;
 	font-size: 0.9em;
-}
-
-	.injury-table th {
+	background: rgba(0, 0, 0, 0.2);
+} .injury-table h3{color:white;} .injury-table th {
 		background: #333;
 		padding: 8px;
 		text-align: left;
 		font-weight: normal;
-	}
-
-	.injury-table td {
+	} .injury-table td {
 		padding: 8px;
 		border: 1px solid #444;
-	}
-
-.body-part {
+	} .body-part {
 	font-weight: bold;
-	/*color: #ff9d00;
-	*/
+	
 	color: #333;
 	width: 20%;
-}
-
-.severity-cell {
+} .severity-cell {
 	cursor: pointer;
 	transition: all 0.3s;
 	width: 22%;
-}
-
-	.severity-cell:hover {
+} .severity-cell:hover {
 		background: rgba(255, 157, 0, 0.1);
-	}
-
-	.severity-cell.marked {
+	} .severity-cell.marked {
 		position: relative;
-	}
-
-		.severity-cell.marked::after {
+	} .severity-cell.marked::after {
 			content: "";
 			position: absolute;
 			top: 0;
@@ -819,39 +530,27 @@ td {
 			bottom: 0;
 			/*background: rgba(0, 0, 0, 0.4);*/
 			z-index: 1;
-		}
-
-	.severity-cell[data-severity="bleeding"].marked {
+		} .severity-cell[data-severity="bleeding"].marked {
 		background: rgba(179, 0, 0, 0.6);
 		color: white;
-	}
-
-	.severity-cell[data-severity="injury"].marked {
+	} .severity-cell[data-severity="injury"].marked {
 		background: rgba(255, 102, 0, 0.6);
 		color: white;
-	}
-
-	.severity-cell[data-severity="mortal"].marked {
+	} .severity-cell[data-severity="mortal"].marked {
 		background: rgba(153, 0, 0, 1);
 		color:white;
-	}
-
-.stabilized-cell {
+	} .stabilized-cell {
 	text-align: center;
 	width: 14%;
-}
-
-.stabilized-checkbox {
+} .stabilized-checkbox {
 	transform: scale(1.3);
+	background:none;
 }
-
 /* Genomes Section */
 .genomes-section {
 	display: flex;
 	flex-direction: column;
-}
-
-.genomes-dropzone {
+} .genomes-dropzone {
 	flex: 1;
 	border: 2px dashed #666;
 	border-radius: 5px;
@@ -859,29 +558,21 @@ td {
 	text-align: center;
 	margin: 10px 0;
 	transition: all 0.3s;
-}
-
-	.genomes-dropzone:hover {
+} .genomes-dropzone:hover {
 		border-color: #ff9d00;
 		background: rgba(255, 157, 0, 0.05);
-	}
-
-	.genomes-dropzone p {
+	} .genomes-dropzone p {
 		margin: 0;
 		color: #999;
 		font-size: 0.9em;
-	}
-
-.genomes-list {
+	} .genomes-list {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
 	max-height: 300px;
 	overflow-y: auto;
 	padding: 5px;
-}
-
-.genome-item {
+} .genome-item {
 	display: flex;
 	align-items: center;
 	gap: 10px;
@@ -889,117 +580,90 @@ td {
 	background: rgba(50, 50, 50, 0.5);
 	border-radius: 4px;
 	border: 1px solid #444;
-}
-
-	.genome-item img {
+} .genome-item img {
 		width: 32px;
 		height: 32px;
 		border: none;
-	}
-
-.genome-info {
+	} .genome-info {
 	flex: 1;
-}
-
-.genome-name {
+} .genome-name {
 	font-weight: bold;
 	font-size: 0.9em;
-}
-
-.genome-description {
+} .genome-description {
 	font-size: 0.8em;
 	color: #aaa;
 	display: none;
-}
-
-.genome-item:hover .genome-description {
+} .genome-item:hover .genome-description {
 	display: block;
-}
-
-.remove-genome {
+} .remove-genome {
 	color: #ff6b6b;
 	cursor: pointer;
 	opacity: 0.7;
 	transition: opacity 0.3s;
-}
-
-	.remove-genome:hover {
+} .remove-genome:hover {
 		opacity: 1;
-	}
-
+	} .bio {
+	background: #d9d9d9;
+	padding: 1%;
+}
 /*Character Sheet*/
 /*UI*/
 #pause img {
 	content: url(../assets/img/wk_Pause_Icon.png);
 	mix-blend-mode: overlay;
-}
-
-#logo {
+} #logo {
 	content: url("../assets/img/Watchkeeper_Logo.jpg");
 	width: 90px;
 	height: auto;
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
-
 /*UI*/
 /*Item sheet*/
 .watchkeeper-item-sheet {
 	padding: 10px;
 	/*font-family: "Baskervville", serif;*/
-}
-
-.sheet-header {
+} .sheet-header {
 	display: flex;
 	align-items: center;
 	margin-bottom: 15px;
 	border-bottom: 1px solid #ccc;
 	padding-bottom: 15px;
 }
-
 	.sheet-header img {
 		flex: 0 0 83px;
 		height: 100%;
 		margin-right: 10px;
 		object-fit: contain;
-	}
-.watchkeeper-item-sheet .header-fields {
+		background: #d9d9d9;
+	} .watchkeeper-item-sheet .header-fields {
 	flex-grow: 1;
-}
-	.watchkeeper-item-sheet .header-fields h1 {
+} .watchkeeper-item-sheet .header-fields h1 {
 		background-color: black;
 		color: white;
 		width: 100%;
-	}
-		.watchkeeper-item-sheet .header-fields h1 input {
+	} .watchkeeper-item-sheet .header-fields h1 input {
 			color: white;
 			text-transform: uppercase;
 			border: 0;
 			width: 100%;
-		}
-	.item-name {
+		} .item-name {
 	flex: 1;
 	margin: 0;
-}
-
-	.item-name input {
+} .item-name input {
 		font-size: 1.5em;
 		width: 100%;
-	}
-.watchkeeper-item-sheet h3 {
+	} .watchkeeper-item-sheet h3 {
 	background-color: black;
 	color: white;
 	font-variant: small-caps;
 	text-align: center;
-}
-.item-type-display {
+} .item-type-display {
 	font-style: italic;
 	color: #666;
 	font-size: 0.9em;
 	margin-top: 3px;
-}
-
-.item-description-section, .item-details-section {
+} .item-description-section, .item-details-section {
 	margin-bottom: 20px;
 	background: #d9d9d9;
 	padding: 10px;
@@ -1010,60 +674,43 @@ td {
 	/* height: 90%; */
 	margin-left: auto;
 	margin-right: auto;
-}
-
-	.item-description-section h3, .item-details-section h3 {
+} .item-description-section h3, .item-details-section h3 {
 		border-bottom: 1px solid #ccc;
 		padding-bottom: 5px;
 		margin-bottom: 10px;
-	}
-
-	.item-description-section textarea {
+	} .item-description-section textarea {
 		width: 100%;
 		min-height: 100px;
 		padding: 8px;
 		border: 1px solid #7a7971;
 		background: rgba(0, 0, 0, 0.05);
 		resize: vertical;
-	}
-
-.form-group {
+	} .form-group {
 	margin-bottom: 10px;
-}
-
-	.form-group label {
+} .form-group label {
 		display: block;
 		font-weight: bold;
 		margin-bottom: 3px;
-	}
-
-.watchkeeper-item-sheet .form-group input[type="text"], .watchkeeper-item-sheet .form-group input[type="number"], .watchkeeper-item-sheet .form-group select {
+	} .watchkeeper-item-sheet .form-group input[type="text"], .watchkeeper-item-sheet .form-group input[type="number"], .watchkeeper-item-sheet .form-group select {
 	width: 100%;
 	padding: 5px;
 	background-color: white;
 	border: 0;
 	border-radius: 0;
 }
-
 /* Vehicle Details */
 .vehicle-details {
 	display: grid;
 	gap: 15px;
-}
-
-.armor-grid, .speed-grid, .fuel-grid {
+} .armor-grid, .speed-grid, .fuel-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 	gap: 10px;
-}
-
-.vehicle-details h3 {
+} .vehicle-details h3 {
 	border-bottom: 1px solid #ccc;
 	padding-bottom: 5px;
 	margin-top: 15px;
-}
-
-.vehicle-details textarea {
+} .vehicle-details textarea {
 	width: 100%;
 	min-height: 80px;
 	padding: 8px;
