@@ -1,41 +1,35 @@
 import { watchkeeper } from "../modules/config.js";
-// Convention Note: Usually sheets are in "modules/sheets/...", not "templates/sheets/..."
-// But if your files are there, this import is fine.
 import { WKitemSheet } from "../templates/sheets/WKitemSheet.js";
 import { WKnamedCharacterSheet } from "../templates/sheets/WKnamedCharacterSheet.js";
 
 Hooks.once("init", async () => {
-    console.log("watchkeeper | Initalizing WATCHKEEPER Core System");
+    console.log("watchkeeper | Initializing WATCHKEEPER Core System");
 
     CONFIG.watchkeeper = watchkeeper;
     CONFIG.INIT = true;
 
-    // Load templates
-    preloadHandlebarsTemplates();
+    // Load templates using the correct V13+ namespace
+    await foundry.applications.handlebars.loadTemplates([]); 
     
     // Register helpers
     registerHandelbarsHelpers();  
 
     // --- ITEM SHEETS ---
-    // Unregister default core sheet
-    Items.unregisterSheet("core", ItemSheet);
-    // Register Custom Sheet
-    Items.registerSheet("watchkeeper", WKitemSheet, {
+    // Register your ApplicationV2 sheets
+    // Note: Items/Actors global objects are still available, 
+    // but we use the namespaced versions for strict V13+ compliance.
+    const ItemsCollection = foundry.documents.collections.Items;
+    
+    ItemsCollection.registerSheet("watchkeeper", WKitemSheet, {
         types: ["weapon", "armor", "utility", "genomes", "consumables", "miscellanous", "vehicle"],
         makeDefault: true
     });
 
     // --- ACTOR SHEETS ---
-    // Unregister default core sheet
-    Actors.unregisterSheet("core", ActorSheet);
-    // Register Custom Sheet
-    // IMPORTANT: Ensure "insurgent" matches the type in your template.json
-    Actors.registerSheet("watchkeeper", WKnamedCharacterSheet, { 
-        types: ["insurgent"], 
-        makeDefault: true
-    });
-    Actors.registerSheet("watchkeeper", WKnamedCharacterSheet, { 
-        types: ["npc"], 
+    const ActorsCollection = foundry.documents.collections.Actors;
+
+    ActorsCollection.registerSheet("watchkeeper", WKnamedCharacterSheet, { 
+        types: ["insurgent", "npc"], 
         makeDefault: true
     });
 });
@@ -46,76 +40,74 @@ Hooks.once("ready", async () => {
     if(!game.user.isGM) return; 
     
     // Migrations / Data integrity checks
-    // IMPORTANT: Ensure "insurgent" matches the type used in init and template.json
     const actorsToFix = game.actors.filter(a => a.type === "insurgent" && !a.system.psychology);
-    
     
     for(const actor of actorsToFix) {
         console.log(`watchkeeper | Initializing psychology for ${actor.name}`);
         await actor.update({
             "system.psychology": {
-                disorders: [
-                    {name: "", minimal: "", severe: "", critical: ""},
-                    {name: "", minimal: "", severe: "", critical: ""},
-                    {name: "", minimal: "", severe: "", critical: ""}
-                ],
-                mutations: [
-                    {name: "", minimal: "", severe: "", critical: ""},
-                    {name: "", minimal: "", severe: "", critical: ""},
-                    {name: "", minimal: "", severe: "", critical: ""}
-                ]
+                disorders: Array(3).fill({name: "", minimal: "", severe: "", critical: ""}),
+                mutations: Array(3).fill({name: "", minimal: "", severe: "", critical: ""})
             }
         });
     }
-});
 
-async function preloadHandlebarsTemplates() {
-    const templatePaths = [
-        // "systems/watchkeeper/templates/partials/template.hbs",
-    ];
-    // FIX: Use the global loadTemplates function
-    return loadTemplates(templatePaths);
-};
+    Hooks.once("ready", async () => {
+        if (!game.user.isGM) return;
+
+        for (const actor of game.actors) {
+            // If the actor is an insurgent and is missing the skills object
+            if (actor.type === "insurgent" && !actor.system.skills) {
+                console.log(`watchkeeper | Migrating skills for ${actor.name}`);
+                await actor.update({
+                    "system.skills": {
+                        athletics: 20,
+                        acrobatics: 10,
+                        firstaid: 20,
+                        lightfirearms: 30,
+                        search: 10,
+                        bluntmelee: 30,
+                        brawling: 20,
+                        stealth: 10
+                    }
+                });
+            }
+        }
+    });
+});
 
 function registerHandelbarsHelpers() {
 
-    Handlebars.registerHelper("equals", function(v1, v2) { return (v1 === v2)});
-    Handlebars.registerHelper("contains", function(element, search) { return (element?.includes(search))});
-
-    // FIX: Using ...args to safely handle the Handlebars options object
-    Handlebars.registerHelper("concat", function(...args) {
-        args.pop(); // Remove the options object (last argument)
-        return args.join("");
+    // Register helper to localize item types
+    Handlebars.registerHelper('localizeItemType', (type) => {
+      const key = `watchkeeper.item.types.${type}`;
+      return game.i18n?.has(key) ? game.i18n.localize(key) : type;
     });
 
-    Handlebars.registerHelper("isGreater", function(p1, p2) { return (p1 > p2)});
-    Handlebars.registerHelper("isEqualORGreater", function(p1, p2) { return (p1 >= p2)});
-    Handlebars.registerHelper("ifOR", function(conditional1, conditional2) { return (conditional1 || conditional2)});
-    Handlebars.registerHelper("doLog", function(value) { console.log(value)});
-    Handlebars.registerHelper("toBoolean", function(string) { return (string === "true")});
+    Handlebars.registerHelper("equals", (v1, v2) => v1 === v2);
+    Handlebars.registerHelper("contains", (element, search) => element?.includes(search));
+    Handlebars.registerHelper("concat", (...args) => { args.pop(); return args.join(""); });
+    Handlebars.registerHelper("isGreater", (p1, p2) => p1 > p2);
+    Handlebars.registerHelper("isEqualORGreater", (p1, p2) => p1 >= p2);
+    Handlebars.registerHelper("ifOR", (c1, c2) => c1 || c2);
+    Handlebars.registerHelper("doLog", (value) => console.log(value));
+    Handlebars.registerHelper("toBoolean", (string) => string === "true");
 
     Handlebars.registerHelper('for', function(from, to, incr, content) {
         let result = "";
-        for(let i = from; i < to; i += incr)
-            result += content.fn(i);
+        for(let i = from; i < to; i += incr) result += content.fn(i);
         return result;
     });
 
     Handlebars.registerHelper("times", function(n, content) {
         let result = "";
-        for(let i = 0; i < n; i++)
-            result += content.fn(i);
+        for(let i = 0; i < n; i++) result += content.fn(i);
         return result;
     });
 
-    Handlebars.registerHelper("notEmpty", function(value) {
+    Handlebars.registerHelper("notEmpty", (value) => {
         if (value == 0 || value == "0") return true;
-        if (value == null|| value  == "") return false;
+        if (value == null || value === "") return false;
         return true;
     });
 }
-
-
-/* -------------------------------------------- */
-/*  General Functions                           */
-/* -------------------------------------------- */
