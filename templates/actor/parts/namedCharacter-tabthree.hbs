@@ -1,0 +1,82 @@
+{{!-- Psychology --}}
+<section class="sheet-body tab" data-tab="tabthree" data-group="primary">
+    <div class="psychology-section">
+        <h2>{{localize "watchkeeper.namedCharacterSheet.Psychology"}}</h2>
+
+        <div class="table-container">
+            <h3>{{localize "watchkeeper.namedCharacterSheet.Disorders"}}</h3>
+            <table class="disorders-table">
+                <thead>
+                    <tr>
+                        <th>{{localize "watchkeeper.namedCharacterSheet.DisorderName"}}</th>
+                        <th>{{localize "watchkeeper.namedCharacterSheet.Minimal"}}</th>
+                        <th>{{localize "watchkeeper.namedCharacterSheet.Severe"}}</th>
+                        <th>{{localize "watchkeeper.namedCharacterSheet.Critical"}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each system.psychology.disorders as |disorder index|}}
+                    <tr>
+                        <td class="name-cell">
+                            <input type="text" name="system.psychology.disorders.{{index}}.name" value="{{disorder.name}}" />
+                        </td>
+                        <td class="level-cell minimal-cell">
+                            <textarea name="system.psychology.disorders.{{index}}.minimal"
+                                      data-index="{{index}}" data-type="disorders" data-level="minimal"
+                                      class="{{#if disorder.minimal}}minimal-bg{{/if}}">{{disorder.minimal}}</textarea>
+                        </td>
+                        <td class="level-cell severe-cell">
+                            <textarea name="system.psychology.disorders.{{index}}.severe"
+                                      data-index="{{index}}" data-type="disorders" data-level="severe"
+                                      class="{{#if disorder.severe}}severe-bg{{/if}}">{{disorder.severe}}</textarea>
+                        </td>
+                        <td class="level-cell critical-cell">
+                            <textarea name="system.psychology.disorders.{{index}}.critical"
+                                      data-index="{{index}}" data-type="disorders" data-level="critical"
+                                      class="{{#if disorder.critical}}critical-bg{{/if}}">{{disorder.critical}}</textarea>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-container">
+            <h3>{{localize "watchkeeper.namedCharacterSheet.Mutations"}}</h3>
+            <table class="mutations-table">
+                <thead>
+                    <tr>
+                        <th>{{localize "watchkeeper.namedCharacterSheet.MutationName"}}</th>
+                        <th>{{localize "watchkeeper.namedCharacterSheet.Minimal"}}</th>
+                        <th>{{localize "watchkeeper.namedCharacterSheet.Severe"}}</th>
+                        <th>{{localize "watchkeeper.namedCharacterSheet.Critical"}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each system.psychology.mutations as |mutation index|}}
+                    <tr>
+                        <td class="name-cell">
+                            <input type="text" name="system.psychology.mutations.{{index}}.name" value="{{mutation.name}}" />
+                        </td>
+                        <td class="level-cell minimal-cell">
+                            <textarea name="system.psychology.mutations.{{index}}.minimal"
+                                      data-index="{{index}}" data-type="mutations" data-level="minimal"
+                                      class="{{#if mutation.minimal}}minimal-bg{{/if}}">{{mutation.minimal}}</textarea>
+                        </td>
+                        <td class="level-cell severe-cell">
+                            <textarea name="system.psychology.mutations.{{index}}.severe"
+                                      data-index="{{index}}" data-type="mutations" data-level="severe"
+                                      class="{{#if mutation.severe}}severe-bg{{/if}}">{{mutation.severe}}</textarea>
+                        </td>
+                        <td class="level-cell critical-cell">
+                            <textarea name="system.psychology.mutations.{{index}}.critical"
+                                      data-index="{{index}}" data-type="mutations" data-level="critical"
+                                      class="{{#if mutation.critical}}critical-bg{{/if}}">{{mutation.critical}}</textarea>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

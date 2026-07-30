@@ -1,0 +1,171 @@
+{{!-- Inventory, equipment, and apparel. This is the part re-rendered after an item drop. --}}
+<section class="sheet-body tab" data-tab="tabfour" data-group="primary">
+    <div class="inventory-section">
+        <h2>{{localize "watchkeeper.item.fields.inventory"}}</h2>
+
+        <div class="inventory-header">
+            <div class="slots-display">
+                <div class="slot-counter">
+                    <label>{{localize "watchkeeper.namedCharacterSheet.InvSlots"}}</label>
+                    <span class="{{#if (lt availableSlots 0)}}negative{{/if}}">{{availableSlots}}</span>
+                </div>
+                <div class="slot-counter">
+                    <label>{{localize "watchkeeper.namedCharacterSheet.UsedInvSlots"}}</label>
+                    <span class="{{#if (gt usedSlots availableSlots)}}over-limit{{/if}}">{{usedSlots}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="equipment-table" data-type="primary" data-dropzone="primary">
+            <h3>{{localize "watchkeeper.namedCharacterSheet.Primary"}}</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>{{localize "watchkeeper.namedCharacterSheet.ItemName"}}</th>
+                        <th>{{localize "watchkeeper.namedCharacterSheet.ItemSkill"}}</th>
+                        <th>{{localize "watchkeeper.namedCharacterSheet.Damage"}}</th>
+                        <th>{{localize "watchkeeper.item.fields.range"}}</th>
+                        <th>{{localize "watchkeeper.item.fields.durability"}}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each primaryItems as |item|}}
+                    <tr data-item-id="{{item.id}}">
+                        <td>{{item.name}}</td>
+                        <td class="rollable" data-roll="skill" data-item-id="{{item.id}}">{{#if item.system.skillUsed}}{{item.system.skillUsed}}{{else}}{{item.system.skill}}{{/if}}</td>
+                        <td class="rollable" data-roll="damage" data-item-id="{{item.id}}">{{item.system.damage}}</td>
+                        <td>{{item.system.range}}</td>
+                        <td class="rollable" data-roll="durability" data-item-id="{{item.id}}">{{item.system.durability}}/{{item.system.maxDurability}}</td>
+                        <td><a class="item-edit"><i class="fas fa-edit"></i></a></td>
+                    </tr>
+                    {{else}}
+                    <tr class="drop-placeholder"><td colspan="6">{{localize "watchkeeper.namedCharacterSheet.DragPrim"}}</td></tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="equipment-table" data-type="secondary" data-dropzone="secondary">
+            <h3>{{localize "watchkeeper.namedCharacterSheet.Secondary"}}</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>{{localize "watchkeeper.namedCharacterSheet.ItemName"}}</th>
+                        <th>{{localize "watchkeeper.namedCharacterSheet.ItemSkill"}}</th>
+                        <th>{{localize "watchkeeper.namedCharacterSheet.Damage"}}</th>
+                        <th>{{localize "watchkeeper.item.fields.range"}}</th>
+                        <th>{{localize "watchkeeper.item.fields.durability"}}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each secondaryItems as |item|}}
+                    <tr data-item-id="{{item.id}}">
+                        <td>{{item.name}}</td>
+                        <td class="rollable" data-roll="skill" data-item-id="{{item.id}}">{{#if item.system.skillUsed}}{{item.system.skillUsed}}{{else}}{{item.system.skill}}{{/if}}</td>
+                        <td class="rollable" data-roll="damage" data-item-id="{{item.id}}">{{item.system.damage}}</td>
+                        <td>{{item.system.range}}</td>
+                        <td class="rollable" data-roll="durability" data-item-id="{{item.id}}">{{item.system.durability}}/{{item.system.maxDurability}}</td>
+                        <td><a class="item-edit"><i class="fas fa-edit"></i></a></td>
+                    </tr>
+                    {{else}}
+                    <tr class="drop-placeholder"><td colspan="6">{{localize "watchkeeper.namedCharacterSheet.DragSec"}}</td></tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="equipment-table" data-type="tertiary" data-dropzone="tertiary">
+            <h3>{{localize "watchkeeper.namedCharacterSheet.Tertiary"}}</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>{{localize "watchkeeper.namedCharacterSheet.ItemName"}}</th>
+                        <th>{{localize "watchkeeper.namedCharacterSheet.ItemSkill"}}</th>
+                        <th>{{localize "watchkeeper.namedCharacterSheet.Damage"}}</th>
+                        <th>{{localize "watchkeeper.item.fields.range"}}</th>
+                        <th>{{localize "watchkeeper.item.fields.durability"}}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each tertiaryItems as |item|}}
+                    <tr data-item-id="{{item.id}}">
+                        <td>{{item.name}}</td>
+                        <td class="rollable" data-roll="skill" data-item-id="{{item.id}}">{{#if item.system.skillUsed}}{{item.system.skillUsed}}{{else}}{{item.system.skill}}{{/if}}</td>
+                        <td class="rollable" data-roll="damage" data-item-id="{{item.id}}">{{item.system.damage}}</td>
+                        <td>{{item.system.range}}</td>
+                        <td class="rollable" data-roll="durability" data-item-id="{{item.id}}">{{item.system.durability}}/{{item.system.maxDurability}}</td>
+                        <td><a class="item-edit"><i class="fas fa-edit"></i></a></td>
+                    </tr>
+                    {{else}}
+                    <tr class="drop-placeholder"><td colspan="6">{{localize "watchkeeper.namedCharacterSheet.DragTer"}}</td></tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="apparel-section" data-dropzone="apparel">
+            <h3>{{localize "watchkeeper.namedCharacterSheet.Apparel"}}</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>{{localize "watchkeeper.namedCharacterSheet.ItemName"}}</th>
+                        <th>{{localize "watchkeeper.item.fields.bodyPart"}}</th>
+                        <th>{{localize "watchkeeper.item.fields.concealment"}}</th>
+                        <th>{{localize "watchkeeper.item.fields.inventorySlot"}}</th>
+                        <th>{{localize "watchkeeper.item.fields.durability"}}</th>
+                        <th>{{localize "watchkeeper.namedCharacterSheet.ItemActions"}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each apparelItems as |item|}}
+                    <tr data-item-id="{{item.id}}">
+                        <td>{{item.name}}</td>
+                        <td>{{localizeBodyPart item.system.bodyPart}}</td>
+                        <td>{{item.system.concealment}}</td>
+                        <td>{{item.system.inventorySlot}}</td>
+                        <td class="rollable" data-roll="durability" data-item-id="{{item.id}}">{{item.system.durability}}</td>
+                        <td>
+                            <a class="item-edit"><i class="fas fa-edit"></i></a>
+                            <a class="item-delete"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                    {{else}}
+                    <tr class="drop-placeholder"><td colspan="6">{{localize "watchkeeper.namedCharacterSheet.DragAppa"}}</td></tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="inventory-items" data-dropzone="inventory">
+            <h3>{{localize "watchkeeper.namedCharacterSheet.Inventory"}} ({{usedSlots}}/{{availableSlots}})</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>{{localize "watchkeeper.namedCharacterSheet.ItemName"}}</th>
+                        <th>{{localize "watchkeeper.item.fields.description"}}</th>
+                        <th>{{localize "watchkeeper.item.fields.weight"}}</th>
+                        <th>{{localize "watchkeeper.namedCharacterSheet.ItemActions"}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each inventoryItems as |item|}}
+                    <tr data-item-id="{{item.id}}">
+                        <td>{{item.name}}</td>
+                        <td>{{item.system.description}}</td>
+                        <td>{{item.system.weight}}</td>
+                        <td>
+                            <a class="item-edit"><i class="fas fa-edit"></i></a>
+                            <a class="item-delete"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                    {{else}}
+                    <tr class="drop-placeholder"><td colspan="4">{{localize "watchkeeper.namedCharacterSheet.DragInv"}}</td></tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

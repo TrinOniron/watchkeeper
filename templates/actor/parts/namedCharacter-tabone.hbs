@@ -1,0 +1,84 @@
+{{!-- Saves and skills --}}
+<section class="sheet-body tab active" data-tab="tabone" data-group="primary">
+    <div class="saves-section">
+        <h2>{{localize "watchkeeper.Saves"}}</h2>
+
+        <div class="saves-controls">
+            <div class="points-display">
+                <strong>{{localize "watchkeeper.TotalPoints"}} {{system.savesTotal}}</strong>
+                <div class="total-points-control">
+                    <button class="decrement-total" type="button">-</button>
+                    <button class="increment-total" type="button">+</button>
+                </div>
+                <div class="remaining-points">
+                    {{localize "watchkeeper.PointsRemaining"}}:
+                    <span class="points-value">{{system.savesRemaining}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="saves-grid">
+            <div class="save-item">
+                <label class="saves-roll" data-key="endurance">{{localize "watchkeeper.Endurance"}}</label>
+                <div class="save-controls">
+                    <button class="save-decrease" data-save="endurance" type="button">-</button>
+                    <input type="number" name="system.saves.endurance" value="{{system.saves.endurance}}" min="20" max="65" />
+                    <button class="save-increase" data-save="endurance" type="button">+</button>
+                </div>
+                <div class="save-value">{{system.saves.endurance}}</div>
+            </div>
+
+            <div class="save-item">
+                <label class="saves-roll" data-key="resolve">{{localize "watchkeeper.Resolve"}}</label>
+                <div class="save-controls">
+                    <button class="save-decrease" data-save="resolve" type="button">-</button>
+                    <input type="number" name="system.saves.resolve" value="{{system.saves.resolve}}" min="20" max="65" />
+                    <button class="save-increase" data-save="resolve" type="button">+</button>
+                </div>
+                <div class="save-value">{{system.saves.resolve}}</div>
+            </div>
+
+            <div class="save-item">
+                <label class="saves-roll" data-key="perception">{{localize "watchkeeper.Perception"}}</label>
+                <div class="save-controls">
+                    <button class="save-decrease" data-save="perception" type="button">-</button>
+                    <input type="number" name="system.saves.perception" value="{{system.saves.perception}}" min="20" max="65" />
+                    <button class="save-increase" data-save="perception" type="button">+</button>
+                </div>
+                <div class="save-value">{{system.saves.perception}}</div>
+            </div>
+
+            <div class="save-item">
+                <label class="saves-roll" data-key="agility">{{localize "watchkeeper.Agility"}}</label>
+                <div class="save-controls">
+                    <button class="save-decrease" data-save="agility" type="button">-</button>
+                    <input type="number" name="system.saves.agility" value="{{system.saves.agility}}" min="20" max="65" />
+                    <button class="save-increase" data-save="agility" type="button">+</button>
+                </div>
+                <div class="save-value">{{system.saves.agility}}</div>
+            </div>
+
+            <div class="save-item">
+                <label class="saves-roll" data-key="charisma">{{localize "watchkeeper.Charisma"}}</label>
+                <div class="save-controls">
+                    <button class="save-decrease" data-save="charisma" type="button">-</button>
+                    <input type="number" name="system.saves.charisma" value="{{system.saves.charisma}}" min="20" max="65" />
+                    <button class="save-increase" data-save="charisma" type="button">+</button>
+                </div>
+                <div class="save-value">{{system.saves.charisma}}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="skills-section">
+        <h2>{{localize "watchkeeper.namedCharacterSheet.Skills"}}</h2>
+        <div class="skills-columns">
+            {{#each skills as |skill|}}
+            <div class="skill-item">
+                <label class="skill-roll" data-key="{{skill.key}}">{{skill.label}}</label>
+                <input type="number" name="system.skills.{{skill.key}}" value="{{skill.value}}" min="0" max="100" />
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</section>

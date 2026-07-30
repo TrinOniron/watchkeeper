@@ -1,0 +1,85 @@
+{{!-- Injuries and genomes --}}
+<section class="sheet-body tab" data-tab="tabfive" data-group="primary">
+    <div class="injury-genomes-section">
+        <h2>{{localize "watchkeeper.namedCharacterSheet.InjuryGenomes"}}</h2>
+
+        <div class="injury-genomes-container">
+            <div class="injury-section">
+                <div class="injury-header">
+                    <div class="silhouette-container">
+                        <img src="systems/watchkeeper/assets/img/silhouette.png" alt="Body Silhouette" />
+                    </div>
+                </div>
+
+                <table class="injury-table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <h3>{{localize "watchkeeper.namedCharacterSheet.InjuryTable"}}</h3>
+                                {{localize "watchkeeper.namedCharacterSheet.BodyPart"}}
+                            </th>
+                            <th>{{localize "watchkeeper.namedCharacterSheet.Bleeding"}}<br>(5+ {{localize "Damage"}})</th>
+                            <th>{{localize "watchkeeper.namedCharacterSheet.Injury"}}<br>(9+ {{localize "Damage"}})</th>
+                            <th>{{localize "watchkeeper.namedCharacterSheet.MortalInjury"}}<br>(13+ {{localize "Damage"}})</th>
+                            <th>{{localize "watchkeeper.namedCharacterSheet.Stabilised"}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each system.injuries as |injury part|}}
+                        {{#with (lookup ../injuryParts part) as |definition|}}
+                        <tr>
+                            <td class="body-part">
+                                {{localize definition.label}}
+                                {{#if definition.doubleDamage}}*2 {{localize "all damage"}}{{/if}}
+                            </td>
+                            <td class="severity-cell injury-cell {{#if (eq injury.severity 'bleeding')}}marked{{/if}}"
+                                data-part="{{part}}" data-severity="bleeding">
+                                {{localize definition.bleeding}}
+                            </td>
+                            <td class="severity-cell injury-cell {{#if (eq injury.severity 'injury')}}marked{{/if}}"
+                                data-part="{{part}}" data-severity="injury">
+                                {{localize definition.injury}}
+                            </td>
+                            <td class="severity-cell injury-cell {{#if (eq injury.severity 'mortal')}}marked{{/if}}"
+                                data-part="{{part}}" data-severity="mortal">
+                                {{localize definition.mortal}}
+                            </td>
+                            <td class="stabilized-cell">
+                                <input type="checkbox" name="system.injuries.{{part}}.stabilized"
+                                       {{checked injury.stabilized}} class="stabilized-checkbox" />
+                            </td>
+                        </tr>
+                        {{/with}}
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="genomes-section">
+                <h2>{{localize "watchkeeper.namedCharacterSheet.Genomes"}}</h2>
+                <div class="genomes-dropzone" data-dropzone="genomes">
+                    <p>{{localize "watchkeeper.namedCharacterSheet.DragGenomesHere"}}</p>
+                </div>
+
+                <div class="genomes-list">
+                    {{#each system.genomes as |genome index|}}
+                    <div class="genome-item" data-index="{{index}}">
+                        <img src="{{genome.img}}" width="32" height="32" />
+                        <div class="genome-info">
+                            <div class="genome-name">{{genome.name}}</div>
+                        </div>
+                        <div class="genome-name">{{localize "watchkeeper.item.fields.genomeValue"}} {{genome.value}}</div>
+                        <div class="genome-name">{{localize "watchkeeper.item.fields.difficulty"}} {{genome.difficulty}}</div>
+                        <div class="genome-name">{{localize "watchkeeper.item.fields.xenosisGain"}} {{genome.xenosisGain}}</div>
+                        <div class="genome-name">{{localize "watchkeeper.item.fields.abilityTrait"}} {{genome.abilityTrait}}</div>
+                        <div class="genome-name">{{genome.description}}</div>
+                        <a class="remove-genome" title="{{localize 'watchkeeper.namedCharacterSheet.RemoveGenome'}}">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
