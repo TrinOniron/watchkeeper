@@ -293,11 +293,20 @@
             }
         }
     },
-    "Item": "Item",
-    "Actor": "Actor",
-    "Scene": "Scene",
-    "JournalEntry": "Journal Entry",
-    "RollTable": "Rollable Table",
+    "TYPES": {
+        "Actor": {
+            "insurgent": "Insurgent"
+        },
+        "Item": {
+            "weapon": "Weapon",
+            "armor": "Armor",
+            "utility": "Utility",
+            "genomes": "Genome",
+            "consumables": "Consumable",
+            "miscellanous": "Miscellaneous",
+            "vehicle": "Vehicle"
+        }
+    },
     "SIDEBAR": {
         "ACTIONS": {
             "CREATE": {
