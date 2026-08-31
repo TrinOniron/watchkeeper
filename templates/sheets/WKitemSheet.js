@@ -4,13 +4,17 @@ const { HandlebarsApplicationMixin, DocumentSheetV2 } = foundry.applications.api
 export class WKitemSheet extends HandlebarsApplicationMixin(DocumentSheetV2) {
   
   static DEFAULT_OPTIONS = {
-    tag: "form",
+        tag: "form",
+    classes: ["watchkeeper", "sheet", "item", "watchkeeper-item-sheet"],
+    position: { width: 500, height: 600 },
     window: {
-      title: "Item Sheet",
-      resizable: true,
+        resizable: true
     },
-    classes: ["watchkeeper", "sheet", "item"],
-    position: { width: 500, height: 600 }
+    form: {
+        handler: WKitemSheet.#onSubmitForm,
+        submitOnChange: true,
+        closeOnSubmit: false
+    }
   };
 
   static PARTS = {
@@ -50,9 +54,15 @@ export class WKitemSheet extends HandlebarsApplicationMixin(DocumentSheetV2) {
   }
 
   
-  async _onSubmit(event, form, formData) {
-    await this.document.update(formData.object);
-  }
+  static async #onSubmitForm(event, form, formData) {
+    event.preventDefault();
+    if (!this.isEditable) return;
+
+    const updateData = formData.object;
+    if (!updateData || !Object.keys(updateData).length) return;
+
+    await this.document.update(updateData, { render: false });
+}
 
   // Handlebars helpers should be registered globally in watchkeeper.js (init hook),
   // but if they are specific to this sheet, keep them there.
