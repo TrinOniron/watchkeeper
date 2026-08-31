@@ -60,5 +60,5 @@
         "units": "Meter"
     },
     "manifest": "https://github.com/TrinOniron/watchkeeper/latest/download/system.json",
-    "download": "https://github.com/TrinOniron/watchkeeper/releases/download/1.0/system.zip"
+    "download": "https://github.com/TrinOniron/watchkeeper/releases/download/0.1.1/system.zip"
 }
