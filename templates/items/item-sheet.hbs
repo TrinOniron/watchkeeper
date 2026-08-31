@@ -1,11 +1,11 @@
-<form class="watchkeeper-item-sheet">
+<section class="watchkeeper-item-sheet">
     <header class="sheet-header">
         <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64" />
         <div class="header-fields">
             <h1>
                 <input name="name" type="text" value="{{item.name}}" placeholder="Item Name" />
             </h1>
-            <div class="item-type-display">{{localizeItemType item.type}}</div>
+            <div class="item-type-display">{{itemTypeLabel}}</div>
         </div>
     </header>
 
@@ -16,34 +16,11 @@
 
         {{#if (eq item.type "weapon")}}
 
-        <!--<div class="form-group">
-        <label>{{labels.attackWith}}</label>
-        <select name="system.attackWith">
-            {{#select system.attackWith}}
-
-            <option value="melee">{{localize "watchkeeper.attack.melee"}}</option>
-            <option value="brawling">{{localize "watchkeeper.attack.brawling"}}</option>
-            <option value="blade">{{localize "watchkeeper.attack.blade"}}</option>
-            <option value="lightFirearms">{{localize "watchkeeper.attack.lightFirearms"}}</option>
-            <option value="mediumFirearms">{{localize "watchkeeper.attack.mediumFirearms"}}</option>
-            <option value="marksmanship">{{localize "watchkeeper.attack.marksmanship"}}</option>
-            <option value="heavyFirearms">{{localize "watchkeeper.attack.heavyFirearms"}}</option>
-            <option value="demolitions">{{localize "watchkeeper.attack.demolitions"}}</option>
-            <option value="artillery">{{localize "watchkeeper.attack.artillery"}}</option>
-            <option value="xenoweapon">{{localize "watchkeeper.attack.xenoweapon"}}</option>
-
-            {{/select}}
-        </select>
-        </div>-->
+        
         <div class="form-group">
             <label>{{labels.values}}</label>
             <select name="system.values">
-                {{#select system.values}}
-                <option value="{{localize "watchkeeper.values.common"}}">{{values.common}}</option>
-                <option value="{{localize "watchkeeper.values.valuable"}}">{{values.valuable}}</option>
-                <option value="{{localize "watchkeeper.values.rare"}}">{{values.rare}}</option>
-                <option value="{{localize "watchkeeper.values.legendary"}}">{{values.legendary}}</option>
-                {{/select}}
+                {{selectOptions config.values selected=system.values}}
             </select>
         </div>
         <div class="form-group">
@@ -91,27 +68,16 @@
 
         {{#if (eq item.type "armor")}}
 
-        <div class="form-group">
-            <label>{{labels.bodyPart}}</label>
-            <select name="system.bodyPart">
-                {{#select system.bodyPart}}
-                <option value="{{localize "watchkeeper.item.bodyParts.torso"}}">{{bodyParts.torso}}</option>
-                <option value="{{localize "watchkeeper.item.bodyParts.head"}}">{{bodyParts.head}}</option>
-                <option value="{{localize "watchkeeper.item.bodyParts.arms"}}">{{bodyParts.arms}}</option>
-                <option value="{{localize "watchkeeper.item.bodyParts.legs"}}">{{bodyParts.legs}}</option>
-                <option value="{{localize "watchkeeper.item.bodyParts.fullBody"}}">{{bodyParts.fullBody}}</option>
-                {{/select}}
-            </select>
-        </div>
+    <div class="form-group">
+        <label>{{labels.bodyPart}}</label>
+        <select name="system.bodyPart">
+            {{selectOptions config.bodyParts selected=system.bodyPart}}
+        </select>
+    </div>
         <div class="form-group">
             <label>{{labels.values}}</label>
             <select name="system.values">
-                {{#select system.values}}
-                <option value="{{localize "watchkeeper.values.common"}}">{{values.common}}</option>
-                <option value="{{localize "watchkeeper.values.valuable"}}">{{values.valuable}}</option>
-                <option value="{{localize "watchkeeper.values.rare"}}">{{values.rare}}</option>
-                <option value="{{localize "watchkeeper.values.legendary"}}">{{values.legendary}}</option>
-                {{/select}}
+                {{selectOptions config.values selected=system.values}}
             </select>
         </div>
         <div class="form-group">
@@ -133,17 +99,12 @@
         {{/if}}
 
         {{#if (eq item.type "utility")}}
-        <div class="form-group">
-            <label>{{labels.values}}</label>
-            <select name="system.values">
-                {{#select system.values}}
-                <option value="{{localize "watchkeeper.values.common"}}">{{values.common}}</option>
-                <option value="{{localize "watchkeeper.values.valuable"}}">{{values.valuable}}</option>
-                <option value="{{localize "watchkeeper.values.rare"}}">{{values.rare}}</option>
-                <option value="{{localize "watchkeeper.values.legendary"}}">{{values.legendary}}</option>
-                {{/select}}
-            </select>
-        </div>
+    <div class="form-group">
+        <label>{{labels.values}}</label>
+        <select name="system.values">
+            {{selectOptions config.values selected=system.values}}
+        </select>
+    </div>
         <div class="form-group">
             <label>{{labels.skillUsed}}</label>
             <input type="text" name="system.skillUsed" value="{{system.skillUsed}}" />
@@ -162,17 +123,12 @@
         </div>
         {{/if}}
         {{#if (eq item.type "genomes")}}
-        <div class="form-group">
-            <label>{{labels.values}}</label>
-            <select name="system.values">
-                {{#select system.values}}
-                <option value="{{localize "watchkeeper.values.common"}}">{{values.common}}</option>
-                <option value="{{localize "watchkeeper.values.valuable"}}">{{values.valuable}}</option>
-                <option value="{{localize "watchkeeper.values.rare"}}">{{values.rare}}</option>
-                <option value="{{localize "watchkeeper.values.legendary"}}">{{values.legendary}}</option>
-                {{/select}}
-            </select>
-        </div>
+    <div class="form-group">
+        <label>{{labels.values}}</label>
+        <select name="system.values">
+            {{selectOptions config.values selected=system.values}}
+        </select>
+    </div>
         <div class="form-group">
             <label>{{labels.difficulty}}</label>
             <input type="text" name="system.difficulty" value="{{system.difficulty}}" />
@@ -206,12 +162,7 @@
             <div class="form-group">
                 <label>{{labels.values}}</label>
                 <select name="system.values">
-                    {{#select system.values}}
-                    <option value="{{localize "watchkeeper.values.common"}}">{{values.common}}</option>
-                    <option value="{{localize "watchkeeper.values.valuable"}}">{{values.valuable}}</option>
-                    <option value="{{localize "watchkeeper.values.rare"}}">{{values.rare}}</option>
-                    <option value="{{localize "watchkeeper.values.legendary"}}">{{values.legendary}}</option>
-                    {{/select}}
+                    {{selectOptions config.values selected=system.values}}
                 </select>
             </div>
 
@@ -280,4 +231,4 @@
             <textarea name="system.description" rows="5">{{system.description}}</textarea>
         </div>
     </div>
-    </form>
+    </section>
