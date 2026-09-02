@@ -36,7 +36,7 @@
             "system": "watchkeeper"
         }
     ],
-    "version": "0.1.1",
+    "version": "0.1.2",
     "compatibility": {
         "minimum": "14",
         "verified": "14.365"
@@ -60,5 +60,5 @@
         "units": "Meter"
     },
     "manifest": "https://github.com/TrinOniron/watchkeeper/latest/download/system.json",
-    "download": "https://github.com/TrinOniron/watchkeeper/releases/download/0.1.1/system.zip"
+    "download": "https://github.com/TrinOniron/watchkeeper/releases/download/0.1.2/system.zip"
 }
