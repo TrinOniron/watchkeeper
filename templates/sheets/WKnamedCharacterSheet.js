@@ -1198,7 +1198,7 @@ export class WKnamedCharacterSheet extends HandlebarsApplicationMixin(ActorSheet
         return String(value ?? "")
             .trim()
             .toLowerCase()
-            .replace(/[\s_-]+/g, "");
+            .replace(/[\s_()]+/g, "");
     }
 
     /** Resolve a displayed item skill such as "Light Firearms" to its actor key. */
